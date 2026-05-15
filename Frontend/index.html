@@ -401,7 +401,10 @@
         }
       });
       container.innerHTML = html;
-      document.querySelectorAll('.post-card-grid').forEach(card => card.addEventListener('click', () => { const id = card.getAttribute('data-id'); if(id) showDetailView(id); }));
+      document.querySelectorAll('.post-card-grid').forEach(card => card.addEventListener('click', () => { 
+        const id = card.getAttribute('data-id'); 
+        if(id) window.location.href = `blog-detail.html?id=${id}`; 
+      }));
     }
 
     function renderPopularTopics() {
@@ -443,36 +446,14 @@
     }
 
     function attachCardListeners() {
-      document.querySelectorAll('.featured-premium-card, .slider-card-premium').forEach(card => card.addEventListener('click', (e) => { const id = card.getAttribute('data-id'); if(id) showDetailView(id); }));
-    }
-
-    function showDetailView(id) {
-      const post = posts.find(p => p.id == id);
-      if(!post) return;
-      document.getElementById("detailImage").src = post.image;
-      document.getElementById("detailCategory").innerText = post.category;
-      document.getElementById("detailDate").innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${formatDate(post.date)}`;
-      document.getElementById("detailTitle").innerText = post.title;
-      document.getElementById("detailTags").innerHTML = post.tags.map(t => `<span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs">#${t}</span>`).join('');
-      document.getElementById("detailFullContent").innerHTML = post.fullContent || `<p>${post.excerpt}</p>`;
-      document.getElementById("mainHomeView").classList.add("hidden");
-      document.getElementById("detailView").classList.remove("hidden");
-      if(document.getElementById("mainFooter")) document.getElementById("mainFooter").classList.add("hidden");
-      window.scrollTo(0,0);
-    }
-
-    function backToHome() {
-      document.getElementById("mainHomeView").classList.remove("hidden");
-      document.getElementById("detailView").classList.add("hidden");
-      if(document.getElementById("mainFooter")) document.getElementById("mainFooter").classList.remove("hidden");
-      renderAllDynamic();
-      window.scrollTo(0,0);
+      document.querySelectorAll('.featured-premium-card, .slider-card-premium').forEach(card => card.addEventListener('click', (e) => { 
+        const id = card.getAttribute('data-id'); 
+        if(id) window.location.href = `blog-detail.html?id=${id}`; 
+      }));
     }
 
     function renderAllDynamic() {
-      if(!document.getElementById("mainHomeView").classList.contains("hidden")) {
-        renderHorizontalFeatured(); renderPopularTopics(); renderRecentSlider(); renderAllPostsGridWithAds();
-      }
+      renderHorizontalFeatured(); renderPopularTopics(); renderRecentSlider(); renderAllPostsGridWithAds();
     }
 
     function resetFilters() {
@@ -494,13 +475,12 @@
       document.getElementById("globalSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; renderAllDynamic(); });
       document.getElementById("mobileSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; renderAllDynamic(); });
       document.getElementById("resetFiltersBtn")?.addEventListener("click", resetFilters);
-      document.getElementById("backToHomeBtn")?.addEventListener("click", backToHome);
       // legal links
       document.getElementById("termsLink")?.addEventListener("click", e => { }); // Handled by <a> tag now
       document.getElementById("disclaimerLink")?.addEventListener("click", e => { });
       document.getElementById("privacyLink")?.addEventListener("click", e => { });
       // navigation
-      const scrollTo = (id) => { if(!document.getElementById("mainHomeView").classList.contains("hidden")) document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); };
+      const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); };
       document.getElementById("desktopHomeLink")?.addEventListener("click", e => { e.preventDefault(); scrollTo("home"); });
       document.getElementById("desktopBlogsLink")?.addEventListener("click", e => { e.preventDefault(); scrollTo("all-posts-section"); });
       document.getElementById("mobileHomeLink")?.addEventListener("click", e => { e.preventDefault(); scrollTo("home"); document.getElementById("mobileMenu")?.classList.add("hidden"); });
