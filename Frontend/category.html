@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Category | AyuraNature</title>
+  <!-- Google Fonts + Tailwind + Font Awesome -->
+  <link rel="icon" type="image/png" href="./publc/Ayuralogo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    body { background: #fefaf5; scroll-behavior: smooth; }
+    .font-serif { font-family: 'Playfair Display', serif; }
+    
+    /* animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease forwards; }
+
+    .sticky-nav { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    .grid-all-posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .post-card-grid { background: white; border-radius: 1.5rem; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 1px solid #f0e4d4; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+    .post-card-grid:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border-color: #cb9e6b; }
+    
+    /* Blog Content Styling */
+    .blog-content-rich h2 { font-size: 1.8rem; font-weight: 700; color: #1c1917; margin: 1.5rem 0 0.75rem; font-family: 'Playfair Display', serif; }
+    .blog-content-rich h3 { font-size: 1.4rem; font-weight: 600; color: #2c5e2e; margin: 1.25rem 0 0.5rem; }
+    .blog-content-rich p { margin-bottom: 1.25rem; line-height: 1.8; color: #444; }
+    .blog-content-rich ul, .blog-content-rich ol { margin-left: 1.5rem; margin-bottom: 1.25rem; list-style-type: disc; }
+    .blog-content-rich li { margin-bottom: 0.5rem; color: #444; }
+    .blog-content-rich img { border-radius: 1rem; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+
+    .footer-link { transition: 0.2s; }
+    .footer-link:hover { color: #cb9e6b; transform: translateX(3px); display: inline-block; }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .hidden { display: none; }
+    
+    .loading-spinner { border: 3px solid #f0e0d0; border-top: 3px solid #2c5e2e; border-radius: 50%; width: 48px; height: 48px; animation: spin 0.8s linear infinite; margin: 2rem auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="sticky-nav border-b border-amber-100">
+    <div class="container mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html">
+          <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-14 w-24 object-contain rounded-full">
+        </a>
+      </div>
+      <nav class="hidden md:flex gap-6 text-stone-700 font-medium">
+        <a href="index.html" class="hover:text-emerald-700 transition">Home</a>
+        <a href="index.html#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
+        <a href="about.html" class="hover:text-emerald-700 transition">About</a>
+        <a href="contact.html" class="hover:text-emerald-700 transition">Contact</a>
+      </nav>
+      <button id="mobileMenuBtn" class="md:hidden text-stone-700 text-2xl"><i class="fas fa-bars"></i></button>
+    </div>
+  </header>
+
+  <main id="categoryMainView" class="py-16 min-h-screen fade-up">
+    <div class="container mx-auto px-5 lg:px-8">
+      <div class="mb-12">
+        <h1 id="categoryTitle" class="font-serif text-4xl md:text-6xl font-bold text-stone-800 mb-4">Category</h1>
+        <div class="w-20 h-1 bg-amber-500 rounded-full"></div>
+      </div>
+
+      <div id="categoryPostsGrid" class="grid-all-posts">
+        <!-- Spinner -->
+        <div class="col-span-full"><div class="loading-spinner"></div></div>
+      </div>
+      
+      <div id="noPostsMsg" class="hidden text-center py-20">
+        <i class="fas fa-feather-alt text-5xl text-stone-300 mb-4"></i>
+        <p class="text-xl text-stone-500">No articles found in this category yet.</p>
+        <a href="index.html" class="inline-block mt-6 bg-emerald-700 text-white px-8 py-3 rounded-full hover:bg-emerald-800 transition">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-stone-900 text-stone-300 pt-16 pb-8">
+    <div class="container mx-auto px-5 lg:px-8 grid md:grid-cols-3 gap-10">
+      <div>
+        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4">
+        <p class="text-sm">Holistic wisdom for modern life.</p>
+      </div>
+      <div>
+        <h4 class="font-semibold text-white text-lg mb-4">Categories</h4>
+        <ul id="footerCategoryLinks" class="space-y-2 text-sm"></ul>
+      </div>
+      <div>
+        <h4 class="font-semibold text-white text-lg mb-4">Legal</h4>
+        <div class="flex flex-col space-y-2">
+          <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+          <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+          <a href="terms.html" class="footer-link">Terms & Conditions</a>
+          <a href="about.html" class="footer-link">About Us</a>
+        </div>
+        <div class="flex gap-5 mt-6 text-2xl">
+          <a href="https://www.facebook.com/share/14dCD3d1j1F/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/ayuranature?igsh=amJsZ2JyNTNqZWJq" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://pin.it/3Oqs3wTWg" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <p class="text-xs text-stone-500 mt-6">© 2026 AyuraNature</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const API_BASE_URL = 'https://blogserver-backhend-1.onrender.com/api/posts';
+    let allPosts = [];
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetCategory = urlParams.get('cat');
+
+    function formatDate(dateStr) {
+      if (!dateStr) return "";
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      try {
+        const d = new Date(dateStr);
+        return isNaN(d.getTime()) ? dateStr : d.toLocaleDateString(undefined, options);
+      } catch (e) { return dateStr; }
+    }
+
+    async function fetchPosts() {
+      try {
+        const response = await fetch(API_BASE_URL);
+        const data = await response.json();
+        allPosts = data.map(p => ({
+          id: p._id,
+          title: p.title,
+          excerpt: p.excerpt,
+          category: p.category,
+          tags: p.tags,
+          date: p.date,
+          image: p.image?.url || p.image || "https://picsum.photos/800/600",
+          fullContent: p.fullContent
+        }));
+        renderCategoryPage();
+        renderFooterCategories();
+      } catch (error) {
+        console.error("Fetch failed", error);
+        document.getElementById("categoryPostsGrid").innerHTML = "<p class='text-center col-span-full py-10'>Failed to load posts. Please try again later.</p>";
+      }
+    }
+
+    function renderCategoryPage() {
+      if (!targetCategory) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      document.getElementById("categoryTitle").innerText = targetCategory;
+      const filtered = allPosts.filter(p => p.category === targetCategory).sort((a,b) => new Date(b.date) - new Date(a.date));
+      
+      const container = document.getElementById("categoryPostsGrid");
+      if (filtered.length === 0) {
+        container.innerHTML = "";
+        document.getElementById("noPostsMsg").classList.remove("hidden");
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => `
+        <div class="post-card-grid" onclick="showDetail('${p.id}')">
+          <img src="${p.image}" class="h-52 w-full object-cover">
+          <div class="p-5">
+            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">${p.category}</span>
+            <h3 class="font-bold text-xl mt-2 line-clamp-2">${p.title}</h3>
+            <p class="text-stone-500 text-sm mt-1 line-clamp-2">${p.excerpt}</p>
+            <div class="mt-3 flex justify-between">
+              <span class="text-xs text-stone-400">${formatDate(p.date)}</span>
+              <span class="text-emerald-700 text-sm font-medium">Read more →</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showDetail(id) {
+      window.location.href = `blog-detail.html?id=${id}`;
+    }
+
+    function renderFooterCategories() {
+      const cats = [...new Set(allPosts.map(p => p.category))].filter(Boolean);
+      const footerList = document.getElementById("footerCategoryLinks");
+      if(footerList) footerList.innerHTML = cats.map(c => `<li><a href="category.html?cat=${encodeURIComponent(c)}" class="footer-link text-sm">${c}</a></li>`).join('');
+    }
+
+    // Init
+    fetchPosts();
+
+    document.getElementById("mobileMenuBtn")?.addEventListener("click", () => {
+      alert("Please use Home for full navigation menu.");
+    });
+  </script>
+</body>
+</html>

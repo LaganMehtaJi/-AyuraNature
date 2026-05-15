@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>About Us | AyuraNature</title>
+  <!-- Google Fonts + Tailwind + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    body { background: #fefaf5; scroll-behavior: smooth; }
+    .font-serif { font-family: 'Playfair Display', serif; }
+    
+    .sticky-nav { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    .footer-link { transition: 0.2s; }
+    .footer-link:hover { color: #cb9e6b; transform: translateX(3px); display: inline-block; }
+    
+    .fade-up { animation: fadeUp 0.7s ease forwards; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .topic-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+    .topic-icon { background: #ecfdf5; color: #059669; padding: 0.75rem; border-radius: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="sticky-nav border-b border-amber-100">
+    <div class="container mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html">
+          <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-14 w-24 object-contain rounded-full">
+        </a>
+      </div>
+      <nav class="hidden md:flex gap-6 text-stone-700 font-medium">
+        <a href="index.html" class="hover:text-emerald-700 transition">Home</a>
+        <a href="index.html#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
+        <a href="about.html" class="text-emerald-700 transition">About</a>
+        <a href="contact.html" class="hover:text-emerald-700 transition">Contact</a>
+      </nav>
+      <button id="mobileMenuBtn" class="md:hidden text-stone-700 text-2xl"><i class="fas fa-bars"></i></button>
+    </div>
+  </header>
+
+  <main class="py-20 fade-up">
+    <div class="container mx-auto px-5 lg:px-8 max-w-4xl">
+      <div class="text-center mb-16">
+        <h1 class="font-serif text-5xl md:text-6xl font-bold text-stone-800 mb-4">Welcome to AyuraNature</h1>
+        <div class="w-24 h-1 bg-emerald-600 mx-auto rounded-full"></div>
+      </div>
+
+      <div class="prose prose-stone lg:prose-xl text-stone-700 leading-relaxed max-w-none">
+        <p class="text-xl text-emerald-800 font-medium mb-8">AyuraNature is dedicated to sharing knowledge about natural health, holistic living, and traditional wellness practices.</p>
+        
+        <p class="mb-6">Our goal is to help people explore simple and natural ways to improve their well-being through balanced nutrition, mindful lifestyle habits, yoga, and natural remedies.</p>
+
+        <div class="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-amber-100 my-12">
+          <h2 class="font-serif text-3xl font-bold text-stone-800 mt-0 mb-6">Our Philosophy</h2>
+          <p>We believe that true wellness comes from maintaining harmony between the mind, body, and nature. Through carefully researched articles, we aim to provide practical information that supports healthier everyday living.</p>
+        </div>
+
+        <h2 class="font-serif text-3xl font-bold text-stone-800 mb-10">What You'll Find Here</h2>
+        
+        <div class="grid md:grid-cols-2 gap-x-12">
+          <div class="topic-item">
+            <div class="topic-icon"><i class="fas fa-leaf"></i></div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Natural Remedies</h3>
+              <p class="text-sm">Traditional wellness practices and plant-based solutions.</p>
+            </div>
+          </div>
+          <div class="topic-item">
+            <div class="topic-icon"><i class="fas fa-apple-alt"></i></div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Healthy Nutrition</h3>
+              <p class="text-sm">Insights into balanced diets and mindful eating.</p>
+            </div>
+          </div>
+          <div class="topic-item">
+            <div class="topic-icon"><i class="fas fa-om"></i></div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Yoga & Lifestyle</h3>
+              <p class="text-sm">Mindful habits and movement for daily harmony.</p>
+            </div>
+          </div>
+          <div class="topic-item">
+            <div class="topic-icon"><i class="fas fa-magic"></i></div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Natural Beauty</h3>
+              <p class="text-sm">Self-care routines inspired by nature's bounty.</p>
+            </div>
+          </div>
+          <div class="topic-item">
+            <div class="topic-icon"><i class="fas fa-heartbeat"></i></div>
+            <div>
+              <h3 class="font-bold text-lg mb-1">General Wellness</h3>
+              <p class="text-sm">Addressing common health concerns through natural approaches.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-16 text-center italic border-t border-amber-100 pt-8 text-stone-500">
+          <p>Our content is written to educate and inspire readers who are interested in natural approaches to health and wellness. AyuraNature is intended for informational and educational purposes, helping readers make more informed lifestyle choices.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-stone-900 text-stone-300 pt-16 pb-8">
+    <div class="container mx-auto px-5 lg:px-8 grid md:grid-cols-3 gap-10">
+      <!-- LEFT -->
+      <div>
+        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4">
+        <p class="text-sm">Holistic wisdom for modern life.</p>
+      </div>
+      <!-- MIDDLE -->
+      <div>
+        <h4 class="font-semibold text-white text-lg mb-4">Categories</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="index.html" class="footer-link">Ayurveda & Natural Remedies</a></li>
+          <li><a href="index.html" class="footer-link">Nutrition & Diet</a></li>
+          <li><a href="index.html" class="footer-link">Yoga & Lifestyle</a></li>
+          <li><a href="index.html" class="footer-link">Natural Beauty</a></li>
+          <li><a href="index.html" class="footer-link">Health Conditions</a></li>
+        </ul>
+      </div>
+      <!-- RIGHT -->
+      <div>
+        <h4 class="font-semibold text-white text-lg mb-4">Legal</h4>
+        <div class="flex flex-col space-y-2">
+          <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+          <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+          <a href="terms.html" class="footer-link">Terms & Conditions</a>
+          <a href="about.html" class="footer-link">About Us</a>
+        </div>
+        <div class="flex gap-5 mt-6 text-2xl">
+          <a href="https://www.facebook.com/share/14dCD3d1j1F/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/ayuranature?igsh=amJsZ2JyNTNqZWJq" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://pin.it/3Oqs3wTWg" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-pinterest"></i></a>
+        </div>
+        <p class="text-xs text-stone-500 mt-6">© 2026 AyuraNature</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
