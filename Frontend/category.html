@@ -4,14 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
   <title>Category | AyuraNature</title>
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://blogserver-backhend-1.onrender.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- Google Fonts + Tailwind + Font Awesome -->
   <link rel="icon" type="image/png" href="./publc/Ayuralogo.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Google Ads & Analytics -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3977453487243376" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-3977453487243376">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-082GMH74JS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-082GMH74JS');
+  </script>
+
   <style>
     * { font-family: 'Inter', sans-serif; }
-    body { background: #fefaf5; scroll-behavior: smooth; }
+    body { background: #fefaf5; scroll-behavior: smooth; overflow-x: hidden; }
     .font-serif { font-family: 'Playfair Display', serif; }
     
     /* animations */
@@ -32,7 +56,7 @@
     .blog-content-rich p { margin-bottom: 1.25rem; line-height: 1.8; color: #444; }
     .blog-content-rich ul, .blog-content-rich ol { margin-left: 1.5rem; margin-bottom: 1.25rem; list-style-type: disc; }
     .blog-content-rich li { margin-bottom: 0.5rem; color: #444; }
-    .blog-content-rich img { border-radius: 1rem; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .blog-content-rich img { border-radius: 2rem; margin: 2rem auto; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); max-width: 100%; height: auto; display: block; }
 
     .footer-link { transition: 0.2s; }
     .footer-link:hover { color: #cb9e6b; transform: translateX(3px); display: inline-block; }
@@ -40,6 +64,10 @@
     .hidden { display: none; }
     
     .loading-spinner { border: 3px solid #f0e0d0; border-top: 3px solid #2c5e2e; border-radius: 50%; width: 48px; height: 48px; animation: spin 0.8s linear infinite; margin: 2rem auto; }
+    
+    /* Hide empty ads to prevent white space */
+    ins.adsbygoogle[data-ad-status="unfilled"], 
+    ins.adsbygoogle:empty { display: none !important; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
@@ -49,15 +77,15 @@
   <header class="sticky-nav border-b border-amber-100">
     <div class="container mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <a href="index.html">
-          <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-14 w-24 object-contain rounded-full">
+        <a href="home">
+          <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-14 w-24 object-contain rounded-full" loading="lazy" decoding="async" width="96" height="56">
         </a>
       </div>
       <nav class="hidden md:flex gap-6 text-stone-700 font-medium">
-        <a href="index.html" class="hover:text-emerald-700 transition">Home</a>
-        <a href="index.html#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
-        <a href="about.html" class="hover:text-emerald-700 transition">About</a>
-        <a href="contact.html" class="hover:text-emerald-700 transition">Contact</a>
+        <a href="home" class="hover:text-emerald-700 transition">Home</a>
+        <a href="index#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
+        <a href="about" class="hover:text-emerald-700 transition">About</a>
+        <a href="contact" class="hover:text-emerald-700 transition">Contact</a>
       </nav>
       <button id="mobileMenuBtn" class="md:hidden text-stone-700 text-2xl"><i class="fas fa-bars"></i></button>
     </div>
@@ -66,8 +94,21 @@
   <main id="categoryMainView" class="py-16 min-h-screen fade-up">
     <div class="container mx-auto px-5 lg:px-8">
       <div class="mb-12">
-        <h1 id="categoryTitle" class="font-serif text-4xl md:text-6xl font-bold text-stone-800 mb-4">Category</h1>
-        <div class="w-20 h-1 bg-amber-500 rounded-full"></div>
+        <h1 id="categoryTitle" class="font-serif text-3xl md:text-5xl font-bold text-stone-800 mb-4">Category</h1>
+        <div class="w-20 h-1 bg-amber-500 rounded-full mb-8"></div>
+        
+        <!-- Category Top Ad -->
+        <div class="mb-12">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-format="fluid"
+               data-ad-layout-key="-5l+cl+0-98+ma"
+               data-ad-client="ca-pub-3977453487243376"
+               data-ad-slot="5052863771"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
       </div>
 
       <div id="categoryPostsGrid" class="grid-all-posts">
@@ -78,7 +119,7 @@
       <div id="noPostsMsg" class="hidden text-center py-20">
         <i class="fas fa-feather-alt text-5xl text-stone-300 mb-4"></i>
         <p class="text-xl text-stone-500">No articles found in this category yet.</p>
-        <a href="index.html" class="inline-block mt-6 bg-emerald-700 text-white px-8 py-3 rounded-full hover:bg-emerald-800 transition">Back to Home</a>
+        <a href="home" class="inline-block mt-6 bg-emerald-700 text-white px-8 py-3 rounded-full hover:bg-emerald-800 transition">Back to Home</a>
       </div>
     </div>
   </main>
@@ -96,10 +137,10 @@
       <div>
         <h4 class="font-semibold text-white text-lg mb-4">Legal</h4>
         <div class="flex flex-col space-y-2">
-          <a href="disclaimer.html" class="footer-link">Disclaimer</a>
-          <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
-          <a href="terms.html" class="footer-link">Terms & Conditions</a>
-          <a href="about.html" class="footer-link">About Us</a>
+          <a href="disclaimer" class="footer-link">Disclaimer</a>
+          <a href="privacy-policy" class="footer-link">Privacy Policy</a>
+          <a href="terms" class="footer-link">Terms & Conditions</a>
+          <a href="about" class="footer-link">About Us</a>
         </div>
         <div class="flex gap-5 mt-6 text-2xl">
           <a href="https://www.facebook.com/share/14dCD3d1j1F/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-facebook"></i></a>
@@ -137,7 +178,7 @@
           category: p.category,
           tags: p.tags,
           date: p.date,
-          image: p.image?.url || p.image || "https://picsum.photos/800/600",
+          image: (p.outerImage?.url || p.outerImage || p.image?.url || p.image || "https://picsum.photos/400/300").replace('/upload/', '/upload/q_auto,f_auto,w_400/'),
           fullContent: p.fullContent
         }));
         renderCategoryPage();
@@ -150,7 +191,7 @@
 
     function renderCategoryPage() {
       if (!targetCategory) {
-        window.location.href = 'index.html';
+        window.location.href = 'index';
         return;
       }
 
@@ -166,7 +207,7 @@
 
       container.innerHTML = filtered.map(p => `
         <div class="post-card-grid" onclick="showDetail('${p.id}')">
-          <img src="${p.image}" class="h-52 w-full object-cover">
+          <img src="${p.image}" class="h-52 w-full object-cover" alt="${p.title}" loading="lazy" decoding="async">
           <div class="p-5">
             <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">${p.category}</span>
             <h3 class="font-bold text-xl mt-2 line-clamp-2">${p.title}</h3>
@@ -181,13 +222,13 @@
     }
 
     function showDetail(id) {
-      window.location.href = `blog-detail.html?id=${id}`;
+      window.location.href = `blog-detail?id=${id}`;
     }
 
     function renderFooterCategories() {
       const cats = [...new Set(allPosts.map(p => p.category))].filter(Boolean);
       const footerList = document.getElementById("footerCategoryLinks");
-      if(footerList) footerList.innerHTML = cats.map(c => `<li><a href="category.html?cat=${encodeURIComponent(c)}" class="footer-link text-sm">${c}</a></li>`).join('');
+      if(footerList) footerList.innerHTML = cats.map(c => `<li><a href="category?cat=${encodeURIComponent(c)}" class="footer-link text-sm">${c}</a></li>`).join('');
     }
 
     // Init

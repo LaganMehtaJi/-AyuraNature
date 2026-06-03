@@ -3,15 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <meta name="description" content="Explore holistic wellness, natural remedies, and Ayurvedic wisdom on AyuraNature. Read our latest blog posts for a healthier lifestyle.">
   <title>Blog Detail | AyuraNature</title>
+  <meta name="description" content="Read detailed articles about holistic wellness, natural healing, and traditional Ayurvedic practices on AyuraNature.">
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://blogserver-backhend-1.onrender.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- Google Fonts + Tailwind + Font Awesome -->
   <link rel="icon" type="image/png" href="./publc/Ayuralogo.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Google Ads & Analytics -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3977453487243376" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-3977453487243376">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-082GMH74JS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-082GMH74JS');
+  </script>
+
   <style>
     * { font-family: 'Inter', sans-serif; }
-    body { background: #fefaf5; scroll-behavior: smooth; }
+    body { background: #fefaf5; scroll-behavior: smooth; overflow-x: hidden; }
     .font-serif { font-family: 'Playfair Display', serif; }
     
     /* animations */
@@ -29,14 +55,21 @@
     .blog-content-rich p { margin-bottom: 1.25rem; line-height: 1.8; color: #444; }
     .blog-content-rich ul, .blog-content-rich ol { margin-left: 1.5rem; margin-bottom: 1.25rem; list-style-type: disc; }
     .blog-content-rich li { margin-bottom: 0.5rem; color: #444; }
-    .blog-content-rich img { border-radius: 1rem; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .blog-content-rich img { border-radius: 2rem; margin: 2rem auto; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); max-width: 60%; height: auto; display: block; }
 
     .footer-link { transition: 0.2s; }
     .footer-link:hover { color: #cb9e6b; transform: translateX(3px); display: inline-block; }
     .hidden { display: none; }
     
     .loading-spinner { border: 3px solid #f0e0d0; border-top: 3px solid #2c5e2e; border-radius: 50%; width: 48px; height: 48px; animation: spin 0.8s linear infinite; margin: 2rem auto; }
+    
+    /* Hide empty ads to prevent white space */
+    ins.adsbygoogle[data-ad-status="unfilled"], 
+    ins.adsbygoogle:empty { display: none !important; }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    #detailImage { height: 650px; object-fit: cover; }
+    @media (max-width: 768px) { #detailImage { height: 350px; } }
   </style>
 </head>
 <body>
@@ -45,60 +78,80 @@
   <header class="sticky-nav border-b border-amber-100">
     <div class="container mx-auto px-5 lg:px-8 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <a href="index.html">
-          <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-14 w-24 object-contain rounded-full">
+        <a href="home">
+          <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-14 w-24 object-contain rounded-full" loading="lazy" decoding="async" width="96" height="56">
         </a>
       </div>
       <nav class="hidden md:flex gap-6 text-stone-700 font-medium">
-        <a href="index.html" class="hover:text-emerald-700 transition">Home</a>
-        <a href="index.html#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
-        <a href="about.html" class="hover:text-emerald-700 transition">About</a>
-        <a href="contact.html" class="hover:text-emerald-700 transition">Contact</a>
+        <a href="home" class="hover:text-emerald-700 transition">Home</a>
+        <a href="index#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
+        <a href="about" class="hover:text-emerald-700 transition">About</a>
+        <a href="contact" class="hover:text-emerald-700 transition">Contact</a>
       </nav>
-      <button id="mobileMenuBtn" class="md:hidden text-stone-700 text-2xl"><i class="fas fa-bars"></i></button>
-    </div>
+      <button id="mobileMenuBtn" class="md:hidden text-stone-700 text-2xl" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+      </div>
   </header>
 
-  <main class="py-10 min-h-screen fade-up">
+  <main class="min-h-screen fade-up">
     <div id="loader" class="container mx-auto px-5 lg:px-8 text-center py-20">
       <div class="loading-spinner"></div>
       <p class="text-stone-500 mt-4">Loading article...</p>
     </div>
 
-    <div id="content" class="hidden container mx-auto px-5 lg:px-8 max-w-4xl">
-      <a href="javascript:history.back()" class="inline-flex items-center text-emerald-700 hover:text-emerald-800 mb-8 transition">
-        <i class="fas fa-arrow-left mr-2"></i> Back
-      </a>
-      
-      <article class="bg-white rounded-3xl shadow-xl overflow-hidden">
-        <img id="detailImage" class="w-full h-64 md:h-96 object-cover" src="" alt="">
-        <div class="p-6 md:p-10">
-          <div class="flex flex-wrap gap-2 mb-4 items-center">
-            <span id="detailCategory" class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-semibold"></span>
-            <span id="detailDate" class="text-stone-400 text-xs"></span>
+    <div id="content" class="hidden w-full pb-20">
+      <div class="px-5 lg:px-8 py-6 max-w-[90%] mx-auto">
+        <a href="home" aria-label="Go back to Home page" class="inline-flex items-center bg-white border border-stone-200 px-6 py-2.5 rounded-full text-stone-700 font-medium hover:bg-stone-50 hover:border-stone-300 transition shadow-sm">
+          <i class="fas fa-arrow-left mr-2"></i> Back to Home
+        </a>
+      </div>
+
+      <!-- MAIN CARD CONTAINER -->
+      <article class="bg-white overflow-hidden max-w-[90%] mx-auto rounded-[2.5rem] shadow-[0_24px_60px_rgba(0,0,0,0.12)] border border-stone-100">
+        <!-- Full Width Image -->
+        <div class="w-full overflow-hidden">
+          <img id="detailImage" class="w-full object-cover" src="" alt="Blog Detail Image" loading="lazy" decoding="async">
+        </div>
+
+        <div class="p-6 md:p-12 lg:p-20">
+          <div class="flex flex-wrap gap-2 mb-6 items-center">
+            <span id="detailCategory" class="bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-semibold"></span>
+            <span id="detailDate" class="text-stone-400 text-sm"></span>
           </div>
-          <h1 id="detailTitle" class="font-serif text-3xl md:text-5xl font-bold text-stone-800 mb-5 leading-tight"></h1>
-          <div id="detailTags" class="flex flex-wrap gap-2 mb-8"></div>
-          <div id="detailFullContent" class="blog-content-rich text-stone-700 leading-relaxed text-lg"></div>
+          <h1 id="detailTitle" class="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-stone-800 mb-8 leading-tight"></h1>
+          <div id="detailTags" class="flex flex-wrap gap-3 mb-10"></div>
+          <div id="detailFullContent" class="blog-content-rich text-stone-700 leading-relaxed text-xl md:text-2xl max-w-none"></div>
+          
+          <!-- In-Article Ad -->
+          <div class="my-16 border-y border-stone-100 py-8">
+            <ins class="adsbygoogle"
+                 style="display:block; text-align:center;"
+                 data-ad-layout="in-article"
+                 data-ad-format="fluid"
+                 data-ad-client="ca-pub-3977453487243376"
+                 data-ad-slot="1013546410"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+
+          <!-- Share section inside card -->
+          <div class="mt-16 pt-10 border-t border-stone-100 text-center">
+            <h3 class="font-serif text-2xl font-bold text-stone-800 mb-6">Share this wisdom</h3>
+            <div class="flex justify-center gap-6">
+              <a href="#" id="shareFB" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-full bg-stone-50 text-blue-600 shadow-sm hover:bg-blue-600 hover:text-white transition-all duration-300"><i class="fab fa-facebook-f text-xl"></i></a>
+              <a href="#" id="shareTW" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-full bg-stone-50 text-sky-500 shadow-sm hover:bg-sky-500 hover:text-white transition-all duration-300"><i class="fab fa-twitter text-xl"></i></a>
+              <a href="#" id="shareWA" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-full bg-stone-50 text-emerald-500 shadow-sm hover:bg-emerald-500 hover:text-white transition-all duration-300"><i class="fab fa-whatsapp text-xl"></i></a>
+            </div>
+          </div>
         </div>
       </article>
-
-      <!-- Share section -->
-      <div class="mt-12 p-8 bg-amber-50/50 rounded-3xl border border-amber-100 text-center">
-        <h3 class="font-serif text-2xl font-bold text-stone-800 mb-4">Share this wisdom</h3>
-        <div class="flex justify-center gap-4 text-2xl">
-          <a href="#" id="shareFB" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-white text-blue-600 shadow-md hover:scale-110 transition"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" id="shareTW" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-white text-sky-500 shadow-md hover:scale-110 transition"><i class="fab fa-twitter"></i></a>
-          <a href="#" id="shareWA" target="_blank" class="w-12 h-12 flex items-center justify-center rounded-full bg-white text-emerald-500 shadow-md hover:scale-110 transition"><i class="fab fa-whatsapp"></i></a>
-        </div>
-      </div>
     </div>
 
     <div id="errorView" class="hidden container mx-auto px-5 lg:px-8 text-center py-20">
       <i class="fas fa-exclamation-circle text-5xl text-red-400 mb-4"></i>
       <h2 class="text-2xl font-bold text-stone-800">Oops! Article not found</h2>
       <p class="text-stone-500 mt-2">The article you're looking for might have been moved or deleted.</p>
-      <a href="index.html" class="inline-block mt-8 bg-emerald-700 text-white px-8 py-3 rounded-full hover:bg-emerald-800 transition">Explore More Blogs</a>
+      <a href="home" class="inline-block mt-8 bg-emerald-700 text-white px-8 py-3 rounded-full hover:bg-emerald-800 transition">Explore More Blogs</a>
     </div>
   </main>
 
@@ -106,23 +159,23 @@
   <footer class="bg-stone-900 text-stone-300 pt-16 pb-8 mt-20">
     <div class="container mx-auto px-5 lg:px-8 grid md:grid-cols-3 gap-10">
       <div>
-        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4">
+        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4" loading="lazy" decoding="async" width="64" height="64">
         <p class="text-sm">Holistic wisdom for modern life.</p>
       </div>
       <div>
         <h4 class="font-semibold text-white text-lg mb-4">Quick Links</h4>
         <ul class="space-y-2 text-sm">
-          <li><a href="index.html" class="footer-link">Home</a></li>
-          <li><a href="index.html#all-posts-section" class="footer-link">Latest Blogs</a></li>
-          <li><a href="about.html" class="footer-link">About Us</a></li>
-          <li><a href="contact.html" class="footer-link">Contact</a></li>
+          <li><a href="home" class="footer-link">Home</a></li>
+          <li><a href="index#all-posts-section" class="footer-link">Latest Blogs</a></li>
+          <li><a href="about" class="footer-link">About Us</a></li>
+          <li><a href="contact" class="footer-link">Contact</a></li>
         </ul>
       </div>
       <div>
         <h4 class="font-semibold text-white text-lg mb-4">Legal & Social</h4>
         <div class="flex flex-col space-y-2">
-          <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
-          <a href="terms.html" class="footer-link">Terms & Conditions</a>
+          <a href="privacy-policy" class="footer-link">Privacy Policy</a>
+          <a href="terms" class="footer-link">Terms & Conditions</a>
         </div>
         <div class="flex gap-5 mt-6 text-2xl">
           <a href="https://www.facebook.com/share/14dCD3d1j1F/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-facebook"></i></a>
@@ -141,7 +194,7 @@
 
     function formatDate(dateStr) {
       if (!dateStr) return "";
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
       try {
         const d = new Date(dateStr);
         return isNaN(d.getTime()) ? dateStr : d.toLocaleDateString(undefined, options);
@@ -167,14 +220,17 @@
 
     function renderPost(post) {
       document.title = `${post.title} | AyuraNature`;
-      document.getElementById("detailImage").src = post.image?.url || post.image || "https://picsum.photos/800/600";
+      let img = post.innerImage?.url || post.innerImage || post.image?.url || post.image || "https://picsum.photos/1200/800";
+      if (img.includes("res.cloudinary.com") && !img.includes("/upload/q_auto,f_auto,w_1200/")) {
+        img = img.replace("/upload/", "/upload/q_auto,f_auto,w_1200/");
+      }
+      document.getElementById("detailImage").src = img;
       document.getElementById("detailCategory").innerText = post.category;
       document.getElementById("detailDate").innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${formatDate(post.date)}`;
       document.getElementById("detailTitle").innerText = post.title;
       document.getElementById("detailTags").innerHTML = post.tags.map(t => `<span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-medium">#${t}</span>`).join('');
       document.getElementById("detailFullContent").innerHTML = post.fullContent || `<p>${post.excerpt}</p>`;
       
-      // Update share links
       const url = window.location.href;
       const text = post.title;
       document.getElementById("shareFB").href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
@@ -190,10 +246,8 @@
       document.getElementById("errorView").classList.remove("hidden");
     }
 
-    // Init
     fetchPostDetail();
 
-    // Mobile menu alert (simplified as on other pages)
     document.getElementById("mobileMenuBtn")?.addEventListener("click", () => {
       alert("Please use Home for full navigation menu.");
     });

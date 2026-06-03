@@ -46,8 +46,8 @@
   <!-- LOGIN SECTION (visible until login) -->
   <div id="loginSection" class="flex-1 flex items-center justify-center p-6">
     <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center">
-      <div class="flex justify-center mb-4">
-        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-24 w-24 object-contain rounded-full bg-amber-50 p-2 border-2 border-emerald-100">
+      <div class="flex justify-center mb-8">
+        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-24 w-24 object-contain rounded-full bg-amber-50 p-2 border-2 border-emerald-100" loading="lazy" decoding="async">
       </div>
       <h2 class="font-bold text-3xl text-stone-800">AyuraNature Admin</h2>
       <p class="text-stone-500 mb-6">Secure Content Management System</p>
@@ -139,8 +139,10 @@
         <div class="grid md:grid-cols-2 gap-4">
           <div><label class="font-semibold">Category</label><input type="text" id="postCategory" placeholder="e.g., Ayurveda & Natural Remedies" class="w-full border rounded-xl p-2.5"></div>
           <div><label class="font-semibold">Tags (comma separated)</label><input type="text" id="postTags" placeholder="Yoga, Herbs, Meditation" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Featured Image (Upload)</label><input type="file" id="postImageFile" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Featured Image URL (Optional fallback)</label><input type="url" id="postImage" placeholder="https://..." class="w-full border rounded-xl p-2.5"></div>
+          <div><label class="font-semibold">Outer Image - For Card (Upload)</label><input type="file" id="postOuterImageFile" class="w-full border rounded-xl p-2.5"></div>
+          <div><label class="font-semibold">Outer Image URL (Optional fallback)</label><input type="url" id="postOuterImage" placeholder="https://..." class="w-full border rounded-xl p-2.5"></div>
+          <div><label class="font-semibold">Inner Image - For Read (Upload)</label><input type="file" id="postInnerImageFile" class="w-full border rounded-xl p-2.5"></div>
+          <div><label class="font-semibold">Inner Image URL (Optional fallback)</label><input type="url" id="postInnerImage" placeholder="https://..." class="w-full border rounded-xl p-2.5"></div>
           <div><label class="font-semibold">Publish Date</label><input type="date" id="postDate" class="w-full border rounded-xl p-2.5"></div>
         </div>
         <div class="flex gap-4 items-center"><label class="flex items-center gap-2"><input type="checkbox" id="postFeatured"> <span>⭐ Feature this post (show on homepage)</span></label></div>
@@ -291,8 +293,10 @@
     setEditorContent("<p>Write your content here. Use toolbar to add headings, tables, or charts.</p>");
     document.getElementById("postCategory").value = "Ayurveda & Natural Remedies";
     document.getElementById("postTags").value = "Wellness, Natural";
-    document.getElementById("postImage").value = "";
-    document.getElementById("postImageFile").value = "";
+    document.getElementById("postOuterImage").value = "";
+    document.getElementById("postOuterImageFile").value = "";
+    document.getElementById("postInnerImage").value = "";
+    document.getElementById("postInnerImageFile").value = "";
     document.getElementById("postFeatured").checked = false;
     document.getElementById("postDate").value = new Date().toISOString().slice(0,10);
     document.getElementById("modalTitle").innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Create New Blog';
@@ -305,7 +309,8 @@
         setEditorContent(post.fullContent || "<p>Edit your content...</p>");
         document.getElementById("postCategory").value = post.category || "";
         document.getElementById("postTags").value = (post.tags || []).join(", ");
-        document.getElementById("postImage").value = post.image?.url || "";
+        document.getElementById("postOuterImage").value = post.outerImage?.url || "";
+        document.getElementById("postInnerImage").value = post.innerImage?.url || "";
         document.getElementById("postFeatured").checked = post.featured || false;
         document.getElementById("postDate").value = post.date ? post.date.split('T')[0] : new Date().toISOString().slice(0,10);
         document.getElementById("modalTitle").innerHTML = '<i class="fas fa-edit mr-2"></i> Edit Blog Post';
@@ -326,8 +331,11 @@
     const tags = document.getElementById("postTags").value.split(",").map(s=>s.trim()).filter(Boolean);
     const featured = document.getElementById("postFeatured").checked;
     const date = document.getElementById("postDate").value;
-    const imageUrl = document.getElementById("postImage").value.trim();
-    const imageFile = document.getElementById("postImageFile").files[0];
+    
+    const outerImageUrl = document.getElementById("postOuterImage").value.trim();
+    const outerImageFile = document.getElementById("postOuterImageFile").files[0];
+    const innerImageUrl = document.getElementById("postInnerImage").value.trim();
+    const innerImageFile = document.getElementById("postInnerImageFile").files[0];
 
     if(!title || !excerpt) return alert("Title and Excerpt are required");
 
@@ -339,8 +347,11 @@
     formData.append('tags', JSON.stringify(tags));
     formData.append('featured', featured);
     formData.append('date', date);
-    if(imageFile) formData.append('image', imageFile);
-    if(imageUrl) formData.append('imageUrl', imageUrl);
+    
+    if(outerImageFile) formData.append('outerImage', outerImageFile);
+    if(outerImageUrl) formData.append('outerImageUrl', outerImageUrl);
+    if(innerImageFile) formData.append('innerImage', innerImageFile);
+    if(innerImageUrl) formData.append('innerImageUrl', innerImageUrl);
 
     try {
       let url = `${API_BASE_URL}/add`;

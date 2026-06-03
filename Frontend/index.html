@@ -3,15 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <meta name="description" content="AyuraNature - Your guide to holistic wellness, natural remedies, and Ayurvedic lifestyle. Discover the power of nature for your health.">
   <title>AyuraNature | Holistic Wellness & Natural Healing</title>
+  <meta name="description" content="Discover natural remedies, Ayurvedic wisdom, and holistic living at AyuraNature. Your guide to a balanced and healthy life.">
+  <!-- Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://blogserver-backhend-1.onrender.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- Google Fonts + Tailwind + Font Awesome -->
   <link rel="icon" type="image/png" href="./publc/Ayuralogo.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <!-- Google Ads & Analytics -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3977453487243376" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-3977453487243376">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-082GMH74JS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-082GMH74JS');
+  </script>
+
   <style>
     * { font-family: 'Inter', sans-serif; }
-    body { background: #fefaf5; scroll-behavior: smooth; }
+    body { background: #fefaf5; scroll-behavior: smooth; overflow-x: hidden; }
     .font-serif { font-family: 'Playfair Display', serif; }
     
     /* animations */
@@ -39,6 +65,7 @@
     .slider-btn-premium:hover { background: #2c5e2e; color: white; transform: scale(1.02); }
     .hero-banner-premium {
       width: 100%;
+      max-height: 500px;
       overflow: hidden;
       background: #fff;
     }
@@ -53,16 +80,22 @@
         min-height: 0;
       } 
     }
+    .ad-slot-placeholder { min-height: 100px; background: #fafafa; display: block; }
+    .ad-feed-placeholder { min-height: 280px; background: #fafafa; display: block; }
+    
     .search-input-premium { background: rgba(255,250,240,0.95); border: 1px solid #e7d9cc; border-radius: 40px; padding: 0.5rem 1rem 0.5rem 2.5rem; transition: all 0.3s ease; width: 220px; }
     .search-input-premium:focus { outline: none; border-color: #2c5e2e; width: 280px; background: white; box-shadow: 0 0 0 4px rgba(44, 94, 46, 0.1); }
     .sticky-nav { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
     .topic-chip-premium { transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28); cursor: pointer; }
     .topic-chip-premium:hover { transform: scale(1.05); background: #6f4e2e !important; color: white !important; }
     .topic-chip-premium.active-topic { background: #2c5e2e !important; color: white !important; border-color: #2c5e2e !important; }
-    .ad-banner-placeholder { background: linear-gradient(135deg, #f7f3eb, #e9e0d4); border: 1px dashed #b98f64; border-radius: 1.5rem; text-align: center; padding: 1rem; margin: 1.5rem 0; }
-    .ad-card { background: linear-gradient(145deg, #fef7e8, #f9efdf); border: 1px solid #e2cfb5; border-radius: 1.5rem; padding: 1.5rem; text-align: center; transition: all 0.2s; }
-    .ad-card:hover { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
     .grid-all-posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    
+    /* Hide empty ads to prevent white space */
+    ins.adsbygoogle[data-ad-status="unfilled"], 
+    ins.adsbygoogle:empty { display: none !important; }
+    .ad-card-dynamic:has(ins.adsbygoogle[data-ad-status="unfilled"]),
+    .ad-card-dynamic:has(ins.adsbygoogle:empty) { display: none !important; }
     @media (min-width: 640px) { .grid-all-posts { gap: 2rem; } }
     .post-card-grid { background: white; border-radius: 1.5rem; overflow: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 1px solid #f0e4d4; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
     .post-card-grid:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border-color: #cb9e6b; }
@@ -73,7 +106,7 @@
     .blog-content-rich p { margin-bottom: 1.25rem; line-height: 1.8; color: #444; }
     .blog-content-rich ul, .blog-content-rich ol { margin-left: 1.5rem; margin-bottom: 1.25rem; list-style-type: disc; }
     .blog-content-rich li { margin-bottom: 0.5rem; color: #444; }
-    .blog-content-rich img { border-radius: 1rem; margin: 1.5rem 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .blog-content-rich img { border-radius: 2rem; margin: 2rem auto; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); max-width: 100%; height: auto; display: block; }
 
     /* Skeleton Loading Styles */
     .skeleton { background: #e2e8f0; position: relative; overflow: hidden; }
@@ -114,6 +147,10 @@
   src="./publc/Ayuralogo.png" 
   alt="AyuraNature Logo" 
   class="h-14 w-24 object-contain rounded-full "
+  loading="lazy"
+  decoding="async"
+  width="96"
+  height="56"
 />
         
       </div>
@@ -123,45 +160,45 @@
         <nav class="flex gap-6 text-stone-700 font-medium">
           <a href="#" id="desktopHomeLink" class="hover:text-emerald-700 transition">Home</a>
           <a href="#all-posts-section" id="desktopBlogsLink" class="hover:text-emerald-700 transition">Blogs</a>
-          <a href="about.html" id="desktopAboutLink" class="hover:text-emerald-700 transition">About</a>
-          <a href="contact.html" id="desktopContactLink" class="hover:text-emerald-700 transition">Contact</a>
+          <a href="about" id="desktopAboutLink" class="hover:text-emerald-700 transition">About</a>
+          <a href="contact" id="desktopContactLink" class="hover:text-emerald-700 transition">Contact</a>
         </nav>
         <div class="relative">
           <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm"></i>
-          <input type="text" id="globalSearchInput" placeholder="Search articles..." class="search-input-premium pl-9 pr-4 py-2 text-sm">
+          <input type="text" id="globalSearchInput" placeholder="Search articles..." aria-label="Search articles" class="search-input-premium pl-9 pr-4 py-2 text-sm">
         </div>
       </div>
 
       <!-- Mobile controls (hamburger + search toggle) -->
       <div class="flex md:hidden items-center gap-3">
-        <button id="mobileSearchToggle" class="text-stone-600 text-xl"><i class="fas fa-search"></i></button>
-        <button id="mobileMenuBtn" class="text-stone-700 text-2xl"><i class="fas fa-bars"></i></button>
+        <button id="mobileSearchToggle" class="text-stone-600 text-xl" aria-label="Toggle Search"><i class="fas fa-search"></i></button>
+        <button id="mobileMenuBtn" class="text-stone-700 text-2xl" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
       </div>
-    </div>
+      </div>
 
-    <!-- Mobile search bar (hidden by default) -->
-    <div id="mobileSearchContainer" class="hidden md:hidden px-5 pb-3">
-      <input type="text" id="mobileSearchInput" placeholder="Search articles..." class="w-full p-2 rounded-full bg-amber-50 border border-amber-200 focus:outline-none">
-    </div>
+      <!-- Mobile search bar (hidden by default) -->
+      <div id="mobileSearchContainer" class="hidden md:hidden px-5 pb-3">
+      <input type="text" id="mobileSearchInput" placeholder="Search articles..." aria-label="Search" class="w-full p-2 rounded-full bg-amber-50 border border-amber-200 focus:outline-none">
+      </div>
 
     <!-- Mobile dropdown menu -->
     <div id="mobileMenu" class="hidden md:hidden bg-white/95 backdrop-blur-md border-t border-amber-100 py-4 px-5 flex flex-col space-y-3">
       <a href="#" id="mobileHomeLink" class="text-stone-700 font-medium py-1">Home</a>
       <a href="#all-posts-section" id="mobileBlogsLink" class="text-stone-700 font-medium py-1">Blogs</a>
-      <a href="about.html" class="text-stone-700 font-medium py-1">About</a>
-      <a href="contact.html" class="text-stone-700 font-medium py-1">Contact</a>
+      <a href="about" class="text-stone-700 font-medium py-1">About</a>
+      <a href="contact" class="text-stone-700 font-medium py-1">Contact</a>
     </div>
   </header>
 
   <main id="mainHomeView">
     <section id="home" class="hero-banner-premium w-full">
-      <img src="./publc/Hero.jpeg" alt="AyuraNature Wellness Banner">
+      <img src="./publc/Hero.jpeg" alt="AyuraNature Wellness Banner" fetchpriority="high" width="1200" height="500" class="w-full h-auto">
     </section>
 
     <!-- Categories section (dynamic from API) -->
     <section id="categories-section" class="py-20 bg-white fade-up">
       <div class="container mx-auto px-5 lg:px-8 text-left">
-        <h2 class="font-serif text-4xl font-bold text-stone-800">Categories</h2>
+        <h2 class="font-serif text-4xl font-bold text-stone-800 border-l-8 border-emerald-700 pl-4">Categories</h2>
         <div id="dynamicCategoriesContainer" class="category-grid-center grid grid-cols-2 md:grid-cols-5 gap-6 mt-12"></div>
       </div>
     </section>
@@ -175,7 +212,7 @@
     </div>
 
     <!-- Featured horizontal scroll -->
-    <section id="featured-section" class="py-14 bg-amber-50/20 fade-up">
+    <section id="featured-section" class="py-14 bg-amber-50/20 fade-up min-h-[500px]">
       <div class="container mx-auto px-5 lg:px-8">
         <h2 class="font-serif text-3xl md:text-4xl font-bold text-stone-800 border-l-8 border-emerald-600 pl-4 mb-6">Top Reads</h2>
         <div id="horizontalFeaturedContainer" class="horizontal-scroll-premium"></div>
@@ -184,7 +221,7 @@
     </section>
 
     <!-- Freshly added slider -->
-    <section id="recent-section" class="py-20 bg-white fade-up">
+    <section id="recent-section" class="py-20 bg-white fade-up min-h-[500px]">
       <div class="container mx-auto px-5 lg:px-8">
         <div class="flex justify-between items-center flex-wrap mb-6">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-stone-800 border-l-8 border-amber-500 pl-4">Latest</h2>
@@ -195,16 +232,23 @@
     </section>
 
     <!-- All posts grid with ads every 3 posts + banner ad -->
-    <section id="all-posts-section" class="py-16 bg-amber-50/10 fade-up">
+    <section id="all-posts-section" class="py-16 bg-amber-50/10 fade-up min-h-[800px]">
       <div class="container mx-auto px-5 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-3">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-stone-800 border-l-8 border-amber-600 pl-4">Explore More</h2>
           <span class="text-xs bg-white/70 px-4 py-1 rounded-full"><i class="fas fa-ad"></i> Ads every 3 posts</span>
         </div>
         <!-- Leaderboard Banner Ad -->
-        <div class="ad-banner-placeholder w-full py-4 my-2 rounded-2xl bg-gradient-to-r from-amber-100 to-stone-100 text-center shadow-sm">
-          <i class="fas fa-chart-line text-amber-700 text-xl mr-2"></i> <span class="font-semibold">Advertisement</span> — Discover holistic wellness & natural remedies
-          <div class="text-xs text-stone-500 mt-1">Your brand here | Contact us for collaboration</div>
+        <div class="w-full py-4 my-2 rounded-2xl text-center">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-format="fluid"
+               data-ad-layout-key="-5l+cl+0-98+ma"
+               data-ad-client="ca-pub-3977453487243376"
+               data-ad-slot="7777888012"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
         </div>
         <div id="allPostsGridContainer" class="grid-all-posts"></div>
         <div id="noPostsGridMsg" class="hidden text-center py-12 text-stone-400 text-lg">No articles match your filters</div>
@@ -224,7 +268,7 @@
     <div class="container mx-auto px-5 lg:px-8 grid md:grid-cols-3 gap-10">
       <!-- LEFT -->
       <div>
-        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4">
+        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4" loading="lazy" decoding="async" width="64" height="64">
         <p class="text-sm">Holistic wisdom for modern life.</p>
       </div>
       <!-- MIDDLE -->
@@ -236,10 +280,10 @@
       <div>
         <h4 class="font-semibold text-white text-lg mb-4">Legal</h4>
         <div class="flex flex-col space-y-2">
-          <a href="disclaimer.html" id="disclaimerLink" class="footer-link">Disclaimer</a>
-          <a href="privacy-policy.html" id="privacyLink" class="footer-link">Privacy Policy</a>
-          <a href="terms.html" id="termsLink" class="footer-link">Terms & Conditions</a>
-          <a href="about.html" class="footer-link">About Us</a>
+          <a href="disclaimer" id="disclaimerLink" class="footer-link">Disclaimer</a>
+          <a href="privacy-policy" id="privacyLink" class="footer-link">Privacy Policy</a>
+          <a href="terms" id="termsLink" class="footer-link">Terms & Conditions</a>
+          <a href="about" class="footer-link">About Us</a>
         </div>
         <div class="flex gap-5 mt-6 text-2xl">
           <a href="https://www.facebook.com/share/14dCD3d1j1F/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-facebook"></i></a>
@@ -254,9 +298,8 @@
   <script>
     // ------------------------------
     // CONFIGURABLE API ENDPOINT – Easily change URL for future updates
-    const API_BASE_URL = window.location.protocol === 'file:'
-      ? 'https://blogserver-backhend-1.onrender.com/api/posts'
-      : 'https://blogserver-backhend-1.onrender.com/api/posts';    // ------------------------------
+    const API_BASE_URL = 'https://blogserver-backhend-1.onrender.com/api/posts';
+    // ------------------------------
     
     let posts = [];
     let currentSearch = "", currentCategory = "", currentTopic = "";
@@ -265,7 +308,7 @@
     // Helper: format date nicely
     function formatDate(dateStr) {
       if (!dateStr) return "";
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
       try {
         const d = new Date(dateStr);
         return isNaN(d.getTime()) ? dateStr : d.toLocaleDateString(undefined, options);
@@ -321,21 +364,13 @@
           tags: p.tags,
           featured: p.featured,
           date: p.date, // Keep full timestamp for precise sorting
-          image: p.image?.url || p.image || "https://picsum.photos/800/600",
+          image: (p.outerImage?.url || p.outerImage || p.image?.url || p.image || "https://picsum.photos/400/300").replace('/upload/', '/upload/q_auto,f_auto,w_400/'),
           fullContent: p.fullContent,
           updatedAt: p.updatedAt || p.date
         }));
       } catch (error) {
         console.warn("API fetch failed, using fallback data", error);
-        // Fallback static posts with varied dates for demonstration
-        const now = new Date();
-        return [
-          { id: 1, title: "Ancient Ayurvedic Rituals for Daily Detox", excerpt: "Triphala, oil pulling and more.", category: "Ayurveda & Natural Remedies", tags: ["Ayurveda"], featured: true, date: new Date(now.getTime() - 86400000 * 2).toISOString(), image: "https://picsum.photos/id/127/800/600", fullContent: "<p>Deep wisdom from the Vedas.</p>" },
-          { id: 2, title: "Mindful Eating Guide", excerpt: "Balance your doshas through food.", category: "Nutrition & Diet", tags: ["Nutrition"], featured: true, date: new Date(now.getTime() - 86400000).toISOString(), image: "https://picsum.photos/id/135/800/600", fullContent: "<p>Eat with awareness.</p>" },
-          { id: 3, title: "Essential Oils for Stress Relief", excerpt: "Discover the power of aromatherapy.", category: "Natural Beauty", tags: ["Aromatherapy"], featured: false, date: new Date(now.getTime() - 3600000 * 5).toISOString(), image: "https://picsum.photos/id/152/800/600", fullContent: "<p>Calm your mind with nature's scents.</p>" },
-          { id: 4, title: "Yoga for Inner Peace", excerpt: "Master the art of mindfulness.", category: "Yoga & Lifestyle", tags: ["Yoga"], featured: false, date: new Date(now.getTime() - 3600000 * 2).toISOString(), image: "https://picsum.photos/id/225/800/600", fullContent: "<p>Find balance in every breath.</p>" },
-          { id: 5, title: "Healing Chronic Inflammation", excerpt: "Natural ways to manage your health.", category: "Health Conditions", tags: ["Health"], featured: false, date: now.toISOString(), image: "https://picsum.photos/id/445/800/600", fullContent: "<p>Take control of your wellbeing.</p>" }
-        ];
+        return [];
       }
     }
 
@@ -364,8 +399,8 @@
       container.innerHTML = featured.map(p => `
         <div class="featured-premium-card" data-id="${p.id}">
           ${isNewPost(p.date) ? '<div class="new-badge"><i class="fas fa-clock mr-1"></i>NEW 24h</div>' : ''}
-          <img src="${p.image}" class="h-52 w-full object-cover" loading="lazy">
-          <div class="p-5"><span class="text-xs bg-emerald-50 px-3 py-1 rounded-full">${p.category}</span><h3 class="font-serif text-xl font-bold mt-2">${p.title.substring(0,55)}</h3><p class="text-stone-600 text-sm mt-2 line-clamp-3">${p.excerpt.substring(0,100)}...</p><div class="mt-4 flex justify-between"><span class="text-xs"><i class="far fa-calendar-alt"></i> ${formatDate(p.date)}</span><span class="text-emerald-700 font-medium">Read →</span></div></div>
+          <img src="${p.image}" class="h-52 w-full object-cover" alt="${p.title}" loading="lazy" decoding="async">
+          <div class="p-5"><span class="text-xs bg-emerald-50 px-3 py-1 rounded-full">${p.category}</span><h3 class="font-serif text-lg font-bold mt-2">${p.title.substring(0,55)}</h3><p class="text-stone-600 text-sm mt-2 line-clamp-3">${p.excerpt.substring(0,100)}...</p><div class="mt-4 flex justify-between"><span class="text-xs"><i class="far fa-calendar-alt"></i> ${formatDate(p.date)}</span><span class="text-emerald-700 font-medium">Read →</span></div></div>
         </div>`).join('');
       attachCardListeners();
     }
@@ -380,8 +415,8 @@
       track.innerHTML = recent.map(p => `
         <div class="featured-premium-card" data-id="${p.id}">
           ${isNewPost(p.date) ? '<div class="new-badge"><i class="fas fa-star"></i> Fresh</div>' : ''}
-          <img src="${p.image}" class="h-52 w-full object-cover" loading="lazy">
-          <div class="p-5"><span class="text-xs text-amber-700 bg-amber-50 px-3 py-1 rounded-full">${p.category}</span><h3 class="font-serif text-xl font-bold mt-2">${p.title.substring(0,55)}</h3><p class="text-stone-600 text-sm mt-2 line-clamp-3">${p.excerpt.substring(0,100)}...</p><div class="mt-4 flex justify-between"><span class="text-xs"><i class="far fa-calendar-alt"></i> ${formatDate(p.date)}</span><span class="text-emerald-700 font-medium">Read →</span></div></div>
+          <img src="${p.image}" class="h-52 w-full object-cover" alt="${p.title}" loading="lazy" decoding="async">
+          <div class="p-5"><span class="text-xs text-amber-700 bg-amber-50 px-3 py-1 rounded-full">${p.category}</span><h3 class="font-serif text-lg font-bold mt-2">${p.title.substring(0,55)}</h3><p class="text-stone-600 text-sm mt-2 line-clamp-3">${p.excerpt.substring(0,100)}...</p><div class="mt-4 flex justify-between"><span class="text-xs"><i class="far fa-calendar-alt"></i> ${formatDate(p.date)}</span><span class="text-emerald-700 font-medium">Read →</span></div></div>
         </div>`).join('');
       attachCardListeners();
     }
@@ -393,17 +428,28 @@
       if (!filtered.length) { container.innerHTML = ""; noMsg.classList.remove("hidden"); return; }
       noMsg.classList.add("hidden");
       let html = '';
+      let adsToPush = 0;
       filtered.forEach((post, idx) => {
-        html += `<div class="post-card-grid" data-id="${post.id}"><img src="${post.image}" class="h-52 w-full object-cover"><div class="p-5"><span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">${post.category}</span><h3 class="font-bold text-xl mt-2">${post.title.substring(0,70)}</h3><p class="text-stone-500 text-sm mt-1 line-clamp-2">${post.excerpt.substring(0,90)}...</p><div class="mt-3 flex justify-between"><span class="text-xs text-stone-400">${formatDate(post.date)}</span><span class="text-emerald-700 text-sm font-medium">Read more →</span></div></div></div>`;
-        // Insert ad after every 3 posts (not after last)
+        html += `<div class="post-card-grid" data-id="${post.id}"><img src="${post.image}" class="h-52 w-full object-cover" alt="${post.title}" loading="lazy" decoding="async"><div class="p-5"><span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">${post.category}</span><h3 class="font-bold text-lg mt-2">${post.title.substring(0,70)}</h3><p class="text-stone-500 text-sm mt-1 line-clamp-2">${post.excerpt.substring(0,90)}...</p><div class="mt-3 flex justify-between"><span class="text-xs text-stone-400">${formatDate(post.date)}</span><span class="text-emerald-700 text-sm font-medium">Read more →</span></div></div></div>`;
         if ((idx + 1) % 3 === 0 && idx !== filtered.length - 1) {
-          html += `<div class="ad-card flex flex-col justify-center items-center p-6 bg-gradient-to-br from-amber-50 to-stone-50 rounded-2xl border border-amber-200"><i class="fas fa-ad text-3xl text-amber-600 mb-2"></i><span class="font-bold text-stone-700">Sponsored Content</span><p class="text-sm text-stone-500 mt-1">Natural supplements • Herbal teas • Free guide</p><button class="mt-3 bg-amber-600 text-white text-xs px-4 py-2 rounded-full">Learn More</button><div class="text-[10px] text-stone-400 mt-2">Advertisement</div></div>`;
+          html += `<div class="ad-card-dynamic w-full ad-feed-placeholder">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-3977453487243376"
+                 data-ad-slot="7679027117"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+          </div>`;
+          adsToPush++;
         }
       });
       container.innerHTML = html;
+      for(let i=0; i<adsToPush; i++) {
+        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+      }
       document.querySelectorAll('.post-card-grid').forEach(card => card.addEventListener('click', () => { 
         const id = card.getAttribute('data-id'); 
-        if(id) window.location.href = `blog-detail.html?id=${id}`; 
+        if(id) window.location.href = `blog-detail?id=${id}`; 
       }));
     }
 
@@ -415,9 +461,7 @@
     }
 
     function renderDynamicCategories() {
-      // Get unique categories from fetched posts
       const cats = [...new Set(posts.map(p => p.category))].filter(Boolean).sort();
-      
       const container = document.getElementById("dynamicCategoriesContainer");
       if(!container) return;
       container.innerHTML = cats.map(cat => {
@@ -427,7 +471,6 @@
         else if(cat.toLowerCase().includes('yoga')) icon = 'fa-praying-hands';
         else if(cat.toLowerCase().includes('beauty')) icon = 'fa-spa';
         else if(cat.toLowerCase().includes('health')) icon = 'fa-heartbeat';
-        
         return `<div data-cat="${cat}" class="category-card-premium">
           <i class="fas ${icon} text-4xl text-amber-700 mb-3"></i>
           <h3 class="font-bold text-xl">${cat}</h3>
@@ -435,20 +478,20 @@
       }).join('');
       document.querySelectorAll(".category-card-premium").forEach(c => c.addEventListener("click", () => { 
         const cat = c.getAttribute("data-cat");
-        window.location.href = `category.html?cat=${encodeURIComponent(cat)}`;
+        window.location.href = `category?cat=${encodeURIComponent(cat)}`;
       }));
     }
 
     function renderFooterCategories() {
       const cats = [...new Set(posts.map(p => p.category))].filter(Boolean).sort();
       const footerList = document.getElementById("footerCategoryLinks");
-      if(footerList) footerList.innerHTML = cats.map(c => `<li><a href="category.html?cat=${encodeURIComponent(c)}" class="footer-link text-sm">${c}</a></li>`).join('');
+      if(footerList) footerList.innerHTML = cats.map(c => `<li><a href="category?cat=${encodeURIComponent(c)}" class="footer-link text-sm">${c}</a></li>`).join('');
     }
 
     function attachCardListeners() {
       document.querySelectorAll('.featured-premium-card, .slider-card-premium').forEach(card => card.addEventListener('click', (e) => { 
         const id = card.getAttribute('data-id'); 
-        if(id) window.location.href = `blog-detail.html?id=${id}`; 
+        if(id) window.location.href = `blog-detail?id=${id}`; 
       }));
     }
 
@@ -465,7 +508,6 @@
     }
     function showToast(msg) { let t=document.querySelector('.toast-notify'); if(t) t.remove(); const div=document.createElement('div'); div.className='toast-notify'; div.innerHTML=`<i class="fas fa-leaf mr-2"></i>${msg}`; document.body.appendChild(div); setTimeout(()=>div.remove(),2500); }
 
-    // INIT
     (async function init() {
       renderSkeletons();
       posts = await fetchPostsFromAPI();
@@ -475,11 +517,6 @@
       document.getElementById("globalSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; renderAllDynamic(); });
       document.getElementById("mobileSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; renderAllDynamic(); });
       document.getElementById("resetFiltersBtn")?.addEventListener("click", resetFilters);
-      // legal links
-      document.getElementById("termsLink")?.addEventListener("click", e => { }); // Handled by <a> tag now
-      document.getElementById("disclaimerLink")?.addEventListener("click", e => { });
-      document.getElementById("privacyLink")?.addEventListener("click", e => { });
-      // navigation
       const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); };
       document.getElementById("desktopHomeLink")?.addEventListener("click", e => { e.preventDefault(); scrollTo("home"); });
       document.getElementById("desktopBlogsLink")?.addEventListener("click", e => { e.preventDefault(); scrollTo("all-posts-section"); });
