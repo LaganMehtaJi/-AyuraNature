@@ -402,7 +402,7 @@
   document.getElementById("loginBtn")?.addEventListener("click", () => {
     const pwd = document.getElementById("adminPasswordInput").value;
     if(pwd === "ayura2026") showDashboard();
-    else alert("Incorrect password. Hint: ayura2026");
+    else alert("Incorrect password.");
   });
   document.getElementById("logoutBtn")?.addEventListener("click", () => { showLogin(); document.getElementById("adminPasswordInput").value = ""; });
   document.getElementById("newPostMainBtn")?.addEventListener("click", () => openPostModal(null));
