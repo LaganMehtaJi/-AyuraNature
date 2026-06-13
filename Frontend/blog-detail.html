@@ -25,8 +25,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <!-- Google Ads & Analytics -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3977453487243376" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-3977453487243376">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5566210396872976" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-5566210396872976">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-082GMH74JS"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -51,10 +51,10 @@
     
     /* Blog Content Styling */
     .blog-content-rich h2 { font-size: 1.8rem; font-weight: 700; color: #1c1917; margin: 1.5rem 0 0.75rem; font-family: 'Playfair Display', serif; }
-    .blog-content-rich h3 { font-size: 1.4rem; font-weight: 600; color: #2c5e2e; margin: 1.25rem 0 0.5rem; }
-    .blog-content-rich p { margin-bottom: 1.25rem; line-height: 1.8; color: #444; }
+    .blog-content-rich h3 { font-size: 1.4rem; font-weight: 700; color: #2c5e2e; margin: 1.25rem 0 0.5rem; font-family: 'Playfair Display', serif; }
+    .blog-content-rich p { margin-bottom: 1.25rem; line-height: 1.8; color: #444; font-weight: 400; }
     .blog-content-rich ul, .blog-content-rich ol { margin-left: 1.5rem; margin-bottom: 1.25rem; list-style-type: disc; }
-    .blog-content-rich li { margin-bottom: 0.5rem; color: #444; }
+    .blog-content-rich li { margin-bottom: 0.5rem; color: #444; font-weight: 400; }
     .blog-content-rich img { border-radius: 2rem; margin: 2rem auto; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); max-width: 60%; height: auto; display: block; }
 
     .footer-link { transition: 0.2s; }
@@ -84,7 +84,7 @@
       </div>
       <nav class="hidden md:flex gap-6 text-stone-700 font-medium">
         <a href="home" class="hover:text-emerald-700 transition">Home</a>
-        <a href="index#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
+        <a href="home#all-posts-section" class="hover:text-emerald-700 transition">Blogs</a>
         <a href="about" class="hover:text-emerald-700 transition">About</a>
         <a href="contact" class="hover:text-emerald-700 transition">Contact</a>
       </nav>
@@ -127,8 +127,8 @@
                  style="display:block; text-align:center;"
                  data-ad-layout="in-article"
                  data-ad-format="fluid"
-                 data-ad-client="ca-pub-3977453487243376"
-                 data-ad-slot="1013546410"></ins>
+                 data-ad-client="ca-pub-5566210396872976"
+                 data-ad-slot="8240215575"></ins>
             <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
@@ -155,38 +155,37 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="bg-stone-900 text-stone-300 pt-16 pb-8 mt-20">
+    <footer id="mainFooter" class="bg-stone-900 text-stone-300 pt-16 pb-8">
     <div class="container mx-auto px-5 lg:px-8 grid md:grid-cols-3 gap-10">
+      <!-- LEFT -->
       <div>
         <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4" loading="lazy" decoding="async" width="64" height="64">
         <p class="text-sm">Holistic wisdom for modern life.</p>
       </div>
+      <!-- MIDDLE -->
       <div>
-        <h4 class="font-semibold text-white text-lg mb-4">Quick Links</h4>
-        <ul class="space-y-2 text-sm">
-          <li><a href="home" class="footer-link">Home</a></li>
-          <li><a href="index#all-posts-section" class="footer-link">Latest Blogs</a></li>
-          <li><a href="about" class="footer-link">About Us</a></li>
-          <li><a href="contact" class="footer-link">Contact</a></li>
-        </ul>
+        <h4 class="font-semibold text-white text-lg mb-4">Categories</h4>
+        <ul id="footerCategoryLinks" class="space-y-2 text-sm"></ul>
       </div>
+      <!-- RIGHT -->
       <div>
-        <h4 class="font-semibold text-white text-lg mb-4">Legal & Social</h4>
+        <h4 class="font-semibold text-white text-lg mb-4">Legal</h4>
         <div class="flex flex-col space-y-2">
-          <a href="privacy-policy" class="footer-link">Privacy Policy</a>
-          <a href="terms" class="footer-link">Terms & Conditions</a>
+          <a href="disclaimer" id="disclaimerLink" class="footer-link">Disclaimer</a>
+          <a href="privacy-policy" id="privacyLink" class="footer-link">Privacy Policy</a>
+          <a href="terms" id="termsLink" class="footer-link">Terms & Conditions</a>
+          <a href="about" class="footer-link">About Us</a>
         </div>
         <div class="flex gap-5 mt-6 text-2xl">
           <a href="https://www.facebook.com/share/14dCD3d1j1F/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-facebook"></i></a>
           <a href="https://www.instagram.com/ayuranature?igsh=amJsZ2JyNTNqZWJq" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-instagram"></i></a>
           <a href="https://pin.it/3Oqs3wTWg" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-pinterest"></i></a>
+          <a href="https://www.youtube.com/channel/UC7gA-B5wST9B4Psz9EQfgNA" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-youtube"></i></a>
         </div>
         <p class="text-xs text-stone-500 mt-6">© 2026 AyuraNature</p>
       </div>
     </div>
   </footer>
-
   <script>
     const API_BASE_URL = 'https://blogserver-backhend-1.onrender.com/api/posts';
     const urlParams = new URLSearchParams(window.location.search);
@@ -213,7 +212,6 @@
         const post = await response.json();
         renderPost(post);
       } catch (error) {
-        console.error("Fetch failed", error);
         showError();
       }
     }
@@ -241,15 +239,29 @@
       document.getElementById("content").classList.remove("hidden");
     }
 
+     function renderFooterCategories() {
+      const footerList = document.getElementById("footerCategoryLinks");
+      if(!footerList) return;
+      
+      const stored = localStorage.getItem('ayura_categories');
+      if(stored) {
+        try {
+          const cats = JSON.parse(stored);
+          footerList.innerHTML = cats.map(c => `<li><a href="category?cat=${encodeURIComponent(c)}" class="footer-link text-sm">${c}</a></li>`).join('');
+        } catch(e) {}
+      }
+    }
+
+
     function showError() {
       document.getElementById("loader").classList.add("hidden");
       document.getElementById("errorView").classList.remove("hidden");
     }
 
+    renderFooterCategories();
     fetchPostDetail();
 
     document.getElementById("mobileMenuBtn")?.addEventListener("click", () => {
-      alert("Please use Home for full navigation menu.");
     });
   </script>
 </body>

@@ -169,8 +169,7 @@
       blogPosts = await response.json();
       renderPostsList("");
     } catch (err) {
-      console.error(err);
-      alert("Error loading posts from server.");
+      // Silent error
     }
     
     const settingsStored = localStorage.getItem(STORAGE_ADMIN_SETTINGS);
@@ -222,12 +221,9 @@
             blogPosts = blogPosts.filter(p => p._id !== id);
             renderPostsList(document.getElementById("adminSearchInput").value);
             updateDashboardStats();
-          } else {
-            alert("Failed to delete post.");
           }
         } catch(err) {
-          console.error(err);
-          alert("Error deleting post.");
+          // Silent error
         }
       } 
     }));
@@ -368,16 +364,11 @@
 
       if(res.ok) {
         const data = await res.json();
-        alert(data.message);
         closeModal();
         loadData();
-      } else {
-        const error = await res.json();
-        alert("Error: " + error.message);
       }
     } catch(err) {
-      console.error(err);
-      alert("Error saving post.");
+      // Silent error
     }
   }
 
@@ -395,14 +386,12 @@
     adminSettings.showInlineAds = document.getElementById("showInlineAdsToggle").checked;
     adminSettings.adFrequency = parseInt(document.getElementById("adFreqInput").value) || 3;
     saveSettings();
-    alert("Settings saved locally (affects public preview).");
   }
 
   // ************ EVENT LISTENERS ************
   document.getElementById("loginBtn")?.addEventListener("click", () => {
     const pwd = document.getElementById("adminPasswordInput").value;
     if(pwd === "ayura2026") showDashboard();
-    else alert("Incorrect password.");
   });
   document.getElementById("logoutBtn")?.addEventListener("click", () => { showLogin(); document.getElementById("adminPasswordInput").value = ""; });
   document.getElementById("newPostMainBtn")?.addEventListener("click", () => openPostModal(null));

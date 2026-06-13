@@ -4,8 +4,11 @@ RewriteEngine On
 RewriteCond %{THE_REQUEST} /index [NC]
 RewriteRule ^ /home [L,R=301]
 
-# Map /home to index.html
-RewriteRule ^home$ index.html [NC,L]
+# Map /home to home.html
+RewriteRule ^home$ home.html [NC,L]
+
+# Default index
+DirectoryIndex home.html
 
 # Remove .html extension from URL
 RewriteCond %{REQUEST_FILENAME} !-d
