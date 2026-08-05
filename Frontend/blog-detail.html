@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="robots" content="index, follow">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
   <meta name="description" content="Explore holistic wellness, natural remedies, and Ayurvedic wisdom on AyuraNature. Read our latest blog posts for a healthier lifestyle.">
   <title>Blog Detail | AyuraNature</title>
-  <meta name="description" content="Read detailed articles about holistic wellness, natural healing, and traditional Ayurvedic practices on AyuraNature.">
+  <meta name="description" id="metaDesc" content="Read detailed articles about holistic wellness, natural healing, and traditional Ayurvedic practices on AyuraNature.">
+  <link rel="sitemap" type="application/xml" href="https://api.ayuranature.com/sitemap.xml">
   <!-- Resource Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -117,7 +119,7 @@
             <span id="detailCategory" class="bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-sm font-semibold"></span>
             <span id="detailDate" class="text-stone-400 text-sm"></span>
           </div>
-          <h1 id="detailTitle" class="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-stone-800 mb-8 leading-tight"></h1>
+          <h1 id="detailTitle" class="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-stone-800 mb-8 leading-tight"></h2>
           <div id="detailTags" class="flex flex-wrap gap-3 mb-10"></div>
           <div id="detailFullContent" class="blog-content-rich text-stone-700 leading-relaxed text-xl md:text-2xl max-w-none"></div>
           
@@ -136,7 +138,7 @@
 
           <!-- Share section inside card -->
           <div class="mt-16 pt-10 border-t border-stone-100 text-center">
-            <h3 class="font-serif text-2xl font-bold text-stone-800 mb-6">Share this wisdom</h3>
+            <h2 class="font-serif text-2xl font-bold text-stone-800 mb-6">Share this wisdom</h2>
             <div class="flex justify-center gap-6">
               <a href="#" id="shareFB" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-full bg-stone-50 text-blue-600 shadow-sm hover:bg-blue-600 hover:text-white transition-all duration-300"><i class="fab fa-facebook-f text-xl"></i></a>
               <a href="#" id="shareTW" target="_blank" class="w-14 h-14 flex items-center justify-center rounded-full bg-stone-50 text-sky-500 shadow-sm hover:bg-sky-500 hover:text-white transition-all duration-300"><i class="fab fa-twitter text-xl"></i></a>
@@ -164,12 +166,12 @@
       </div>
       <!-- MIDDLE -->
       <div>
-        <h4 class="font-semibold text-white text-lg mb-4">Categories</h4>
+        <h2 class="font-semibold text-white text-lg mb-4">Categories</h2>
         <ul id="footerCategoryLinks" class="space-y-2 text-sm"></ul>
       </div>
       <!-- RIGHT -->
       <div>
-        <h4 class="font-semibold text-white text-lg mb-4">Legal</h4>
+        <h2 class="font-semibold text-white text-lg mb-4">Legal</h2>
         <div class="flex flex-col space-y-2">
           <a href="disclaimer" id="disclaimerLink" class="footer-link">Disclaimer</a>
           <a href="privacy-policy" id="privacyLink" class="footer-link">Privacy Policy</a>
@@ -182,14 +184,21 @@
           <a href="https://pin.it/3Oqs3wTWg" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-pinterest"></i></a>
           <a href="https://www.youtube.com/channel/UC7gA-B5wST9B4Psz9EQfgNA" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-youtube"></i></a>
         </div>
-        <p class="text-xs text-stone-500 mt-6">© 2026 AyuraNature</p>
+        <p class="text-xs text-stone-500 mt-6">&copy; 2026 AyuraNature</p>
       </div>
     </div>
   </footer>
   <script>
-    const API_BASE_URL = 'https://blogserver-backhend-1.onrender.com/api/posts';
+    const API_BASE_URL = 'https://api.ayuranature.com/api';
     const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
+    const rawTitle = urlParams.get('title');
+
+    if (rawTitle) {
+      const canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      canonicalLink.href = 'https://www.ayuranature.com/blog-detail?title=' + rawTitle;
+      document.head.appendChild(canonicalLink);
+    }
 
     function formatDate(dateStr) {
       if (!dateStr) return "";
@@ -199,25 +208,78 @@
         return isNaN(d.getTime()) ? dateStr : d.toLocaleDateString(undefined, options);
       } catch (e) { return dateStr; }
     }
-
     async function fetchPostDetail() {
-      if (!postId) {
+      if (!rawTitle) {
         showError();
         return;
       }
-
       try {
-        const response = await fetch(`${API_BASE_URL}/${postId}`);
-        if (!response.ok) throw new Error('Post not found');
-        const post = await response.json();
-        renderPost(post);
+        let response = await fetch(`${API_BASE_URL}/posts/slug/${encodeURIComponent(rawTitle)}`);
+        if (response.ok) {
+          const post = await response.json();
+          renderPost(post);
+        } else {
+          // Fallback: If slug API fails, fetch all posts and find matching title manually
+          let fallbackResponse = await fetch(`${API_BASE_URL}/posts`);
+          if (fallbackResponse.ok) {
+            const allPosts = await fallbackResponse.json();
+            const fallbackPost = allPosts.find(p => p.slug === rawTitle || encodeURIComponent((p.title || "").replace(/\s+/g, '-')) === rawTitle);
+            if (fallbackPost) {
+              renderPost(fallbackPost);
+            } else {
+              showError();
+            }
+          } else {
+            showError();
+          }
+        }
       } catch (error) {
         showError();
       }
     }
 
     function renderPost(post) {
-      document.title = `${post.title} | AyuraNature`;
+      // ===== Dynamic SEO Meta Tags =====
+      document.title = `${post.metaTitle || post.title} | AyuraNature`;
+      
+      const metaDescEl = document.getElementById('metaDesc') || document.querySelector('meta[name="description"]');
+      if(metaDescEl) metaDescEl.setAttribute('content', post.metaDescription || post.excerpt || '');
+
+      const existingCanonical = document.querySelector('link[rel="canonical"]');
+      if(existingCanonical) existingCanonical.href = `https://www.ayuranature.com/blog-detail?title=${post.slug}`;
+
+      document.querySelectorAll('meta[data-dynamic="true"]').forEach(el => el.remove());
+
+      if(post.metaTags && post.metaTags.length > 0) {
+        post.metaTags.forEach(tag => {
+          const meta = document.createElement('meta');
+          meta.setAttribute('data-dynamic', 'true');
+          if(tag.name.startsWith('og:')) meta.setAttribute('property', tag.name);
+          else if(tag.name.startsWith('twitter:')) meta.setAttribute('name', tag.name);
+          else meta.setAttribute('name', tag.name);
+          meta.setAttribute('content', tag.content);
+          document.head.appendChild(meta);
+        });
+      }
+
+      const existingOgTags = (post.metaTags || []).map(t => t.name);
+      if(!existingOgTags.includes('og:title')) {
+        const m = document.createElement('meta'); m.setAttribute('data-dynamic','true'); m.setAttribute('property','og:title'); m.setAttribute('content', post.metaTitle || post.title); document.head.appendChild(m);
+      }
+      if(!existingOgTags.includes('og:description')) {
+        const m = document.createElement('meta'); m.setAttribute('data-dynamic','true'); m.setAttribute('property','og:description'); m.setAttribute('content', post.metaDescription || post.excerpt || ''); document.head.appendChild(m);
+      }
+      if(!existingOgTags.includes('og:image')) {
+        const imgUrl = post.outerImage?.url || post.innerImage?.url || '';
+        if(imgUrl) { const m = document.createElement('meta'); m.setAttribute('data-dynamic','true'); m.setAttribute('property','og:image'); m.setAttribute('content', imgUrl); document.head.appendChild(m); }
+      }
+      if(!existingOgTags.includes('og:type')) {
+        const m = document.createElement('meta'); m.setAttribute('data-dynamic','true'); m.setAttribute('property','og:type'); m.setAttribute('content', 'article'); document.head.appendChild(m);
+      }
+      if(!existingOgTags.includes('og:url')) {
+        const m = document.createElement('meta'); m.setAttribute('data-dynamic','true'); m.setAttribute('property','og:url'); m.setAttribute('content', `https://www.ayuranature.com/blog-detail?title=${post.slug}`); document.head.appendChild(m);
+      }
+
       let img = post.innerImage?.url || post.innerImage || post.image?.url || post.image || "https://picsum.photos/1200/800";
       if (img.includes("res.cloudinary.com") && !img.includes("/upload/q_auto,f_auto,w_1200/")) {
         img = img.replace("/upload/", "/upload/q_auto,f_auto,w_1200/");
@@ -239,10 +301,9 @@
       document.getElementById("content").classList.remove("hidden");
     }
 
-     function renderFooterCategories() {
+    function renderFooterCategories() {
       const footerList = document.getElementById("footerCategoryLinks");
       if(!footerList) return;
-      
       const stored = localStorage.getItem('ayura_categories');
       if(stored) {
         try {
@@ -251,7 +312,6 @@
         } catch(e) {}
       }
     }
-
 
     function showError() {
       document.getElementById("loader").classList.add("hidden");
@@ -266,3 +326,6 @@
   </script>
 </body>
 </html>
+
+
+
