@@ -152,10 +152,10 @@
           <div class="flex items-center gap-2 mb-4 cursor-pointer" onclick="document.getElementById('seoSection').classList.toggle('hidden')">
             <i class="fas fa-search-plus text-amber-600"></i>
             <h2 class="font-bold text-lg text-stone-800">SEO Settings</h2>
-            <span class="text-xs text-stone-400">(Optional — click to expand)</span>
+            <span class="text-xs text-stone-400">(Click to collapse)</span>
             <i class="fas fa-chevron-down text-stone-400 ml-auto"></i>
           </div>
-          <div id="seoSection" class="hidden space-y-4">
+          <div id="seoSection" class="space-y-4">
             <div>
               <label class="font-semibold block mb-1">Meta Title <span class="text-xs text-stone-400">(Leave empty to use blog title)</span></label>
               <input type="text" id="postMetaTitle" placeholder="Custom SEO title for search engines" class="w-full border border-stone-300 rounded-xl p-2.5">
@@ -384,7 +384,6 @@
     document.getElementById("postMetaDescription").value = "";
     document.getElementById("postKeywords").value = "";
     clearMetaTags();
-    document.getElementById("seoSection").classList.add("hidden");
 
     if(postId) {
       const post = blogPosts.find(p => p._id === postId);
@@ -406,7 +405,6 @@
         document.getElementById("postKeywords").value = post.keywords || "";
         if(post.metaTags && post.metaTags.length > 0) {
           post.metaTags.forEach(tag => addMetaTagRow(tag.name, tag.content));
-          document.getElementById("seoSection").classList.remove("hidden");
         }
       }
     }
@@ -475,9 +473,12 @@
         closeModal();
         loadData();
         showToast(id ? "Post updated successfully!" : "Post added successfully!");
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        showToast(errData.message || "Failed to save post", "error");
       }
     } catch(err) {
-      showToast("Error saving post!", "error");
+      showToast("Error saving post! Connection failed.", "error");
     }
   }
 
