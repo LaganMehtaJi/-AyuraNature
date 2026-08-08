@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="keywords" content="Ayurvedic Home Remedies">
+  <meta name="description" content="Natural Health & Holistic Wellness Guide | AyuraNature">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.ayuranature.com/" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-  <meta name="description" content="AyuraNature - Your guide to holistic wellness, natural remedies, and Ayurvedic lifestyle. Discover the power of nature for your health.">
+  
   <title>AyuraNature | Holistic Wellness & Natural Healing</title>
-  <meta name="description" content="Discover natural remedies, Ayurvedic wisdom, and holistic living at AyuraNature. Your guide to a balanced and healthy life.">
+  
   <!-- Resource Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -205,7 +209,7 @@
     <!-- Categories section (dynamic from API) -->
     <section id="categories-section" class="py-20 bg-white fade-up">
       <div class="container mx-auto px-5 lg:px-8 text-left">
-        <h3 class="font-serif text-4xl font-bold text-stone-800 border-l-8 border-emerald-700 pl-4">Categories</h3>
+        <h2 class="font-serif text-4xl font-bold text-stone-800 border-l-8 border-emerald-700 pl-4">Categories</h2>
         <div id="dynamicCategoriesContainer" class="category-grid-center grid grid-cols-2 md:grid-cols-5 gap-6 mt-12"></div>
       </div>
     </section>
@@ -241,7 +245,7 @@
     <!-- All posts grid with ads every 3 posts + banner ad -->
     <section id="all-posts-section" class="py-16 bg-amber-50/10 fade-up min-h-[800px]">
       <div class="container mx-auto px-5 lg:px-8">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-3">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-3">
           <h2 class="font-serif text-3xl md:text-4xl font-bold text-stone-800 border-l-8 border-amber-600 pl-4">Explore More</h2>
           <span class="text-xs bg-white/70 px-4 py-1 rounded-full"><i class="fas fa-ad"></i> Ads every 3 posts</span>
         </div>
@@ -259,6 +263,11 @@
         </div>
         <div id="allPostsGridContainer" class="grid-all-posts"></div>
         <div id="noPostsGridMsg" class="hidden text-center py-12 text-stone-400 text-lg">No articles match your filters</div>
+        <div class="text-center mt-12">
+          <button id="loadMoreBtn" class="hidden bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 px-8 rounded-full transition shadow-md">
+            Load More Articles <i class="fas fa-chevron-down ml-2"></i>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -271,48 +280,47 @@
     </section>
   </main>
 
-  <footer class="bg-stone-900 pt-16 pb-8 border-t-4 border-amber-600 mt-12 relative overflow-hidden">
-      <div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-800 rounded-full blur-3xl opacity-20"></div>
-      <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-amber-800 rounded-full blur-3xl opacity-20"></div>
-      
-      <div class="max-w-7xl mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
-        <div class="md:col-span-2">
-          <h6 class="font-serif text-2xl text-white font-bold mb-4">AyuraNature</h6>
-          <p class="text-stone-400 max-w-md leading-relaxed">Embracing the wisdom of nature for a healthier, balanced life. Discover remedies and wellness tips inspired by ancient traditions.</p>
-          <div class="flex gap-4 mt-6">
-            <a href="#" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center text-stone-300 hover:bg-emerald-600 hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center text-stone-300 hover:bg-emerald-600 hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center text-stone-300 hover:bg-emerald-600 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-        <div>
-          <h4 class="font-semibold text-white text-lg mb-4">Categories</h4>
-          <ul id="footerCategoryLinks" class="space-y-2 text-stone-300"></ul>
-        </div>
-        <div>
-          <h4 class="font-semibold text-white text-lg mb-4">Legal</h4>
-          <div class="flex flex-col space-y-2 text-stone-300">
-            <a href="disclaimer" id="disclaimerLink" class="footer-link">Disclaimer</a>
-            <a href="privacy-policy" id="privacyLink" class="footer-link">Privacy Policy</a>
-            <a href="terms" id="termsLink" class="footer-link">Terms & Conditions</a>
-            <a href="about" class="footer-link">About Us</a>
-          </div>
-        </div>
+  <footer id="mainFooter" class="bg-stone-900 text-stone-300 pt-16 pb-8">
+    <div class="container mx-auto px-5 lg:px-8 grid md:grid-cols-3 gap-10">
+      <!-- LEFT -->
+      <div>
+        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-16 w-auto object-contain rounded-xl mb-4" loading="lazy" decoding="async" width="64" height="64">
+        <p class="text-sm">Holistic wisdom for modern life.</p>
       </div>
-      <div class="text-center mt-12 pt-8 border-t border-stone-800 text-stone-500 text-sm">© 2026 AyuraNature</div>
+      <!-- MIDDLE -->
+      <div>
+        <h3 class="font-semibold text-white text-lg mb-4">Categories</h3>
+        <ul id="footerCategoryLinks" class="space-y-2 text-sm"></ul>
+      </div>
+      <!-- RIGHT -->
+      <div>
+        <h3 class="font-semibold text-white text-lg mb-4">Legal</h3>
+        <div class="flex flex-col space-y-2">
+          <a href="disclaimer" id="disclaimerLink" class="footer-link">Disclaimer</a>
+          <a href="privacy-policy" id="privacyLink" class="footer-link">Privacy Policy</a>
+          <a href="terms" id="termsLink" class="footer-link">Terms & Conditions</a>
+          <a href="about" class="footer-link">About Us</a>
+        </div>
+        <div class="flex gap-5 mt-6 text-2xl">
+          <a href="https://www.facebook.com/share/14dCD3d1j1F/" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/ayuranature?igsh=amJsZ2JyNTNqZWJq" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://pin.it/3Oqs3wTWg" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-pinterest"></i></a>
+          <a href="https://www.youtube.com/channel/UC7gA-B5wST9B4Psz9EQfgNA" target="_blank" rel="noopener noreferrer" class="footer-link"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p class="text-xs text-stone-500 mt-6">© 2026 AyuraNature</p>
+      </div>
+    </div>
   </footer>
 
   <script>
     // ------------------------------
     // CONFIGURABLE API ENDPOINT – Easily change URL for future updates
-    const API_BASE_URL = 'https://blogserver-backhend-1.onrender.com/api/posts';
+    const API_BASE_URL = 'https://api.ayuranature.com/api/posts';
     // ------------------------------
     
     let posts = [];
     let currentSearch = "", currentCategory = "", currentTopic = "";
     let recentList = [];
-    let displayedCount = 10;
-    let isFetchingMore = false;
 
     // Helper: format date nicely
     function formatDate(dateStr) {
@@ -335,7 +343,7 @@
           <div class="skeleton skeleton-text w-1/2"></div>
           <div class="skeleton skeleton-text w-5/6"></div>
         </div>`;
-        
+      
       const featuredSkeletonCard = `
         <div class="featured-premium-card" style="box-shadow:none; cursor:default; border-color:#f0e4d4; height: 360px;">
           <div class="skeleton" style="height: 208px; width: 100%;"></div>
@@ -379,7 +387,7 @@
         return apiPosts.map(p => ({
           id: p._id,
           title: p.title,
-          slug: p.slug || encodeURIComponent((p.title || "").replace(/\s+/g, '-')),
+          slug: p.slug || encodeURIComponent(p.title.replace(/\s+/g, '-')),
           excerpt: p.excerpt,
           category: p.category,
           tags: p.tags,
@@ -441,22 +449,27 @@
       attachCardListeners();
     }
 
-    function renderAllPostsGridWithAds(append = false) {
+    function renderAllPostsGridWithAds() {
       const filtered = getFilteredPosts();
       const container = document.getElementById("allPostsGridContainer");
       const noMsg = document.getElementById("noPostsGridMsg");
-      if (!filtered.length) { container.innerHTML = ""; noMsg.classList.remove("hidden"); return; }
-      noMsg.classList.add("hidden");
+      const loadMoreBtn = document.getElementById("loadMoreBtn");
       
-      const startIndex = append ? displayedCount - 10 : 0;
-      const toDisplay = filtered.slice(startIndex, displayedCount);
-
+      if (!filtered.length) { 
+        container.innerHTML = ""; 
+        noMsg.classList.remove("hidden"); 
+        if(loadMoreBtn) loadMoreBtn.classList.add("hidden");
+        return; 
+      }
+      noMsg.classList.add("hidden");
       let html = '';
       let adsToPush = 0;
-      toDisplay.forEach((post, i) => {
-        const idx = startIndex + i;
+      
+      const toDisplay = filtered.slice(0, visiblePostsCount);
+      
+      toDisplay.forEach((post, idx) => {
         html += `<div class="post-card-grid" data-title="${post.slug}"><img src="${post.image}" class="h-52 w-full object-cover" alt="${post.title}" loading="lazy" decoding="async"><div class="p-5"><div class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full inline-block font-semibold">${post.category}</div><div class="font-bold text-lg mt-2 text-stone-800">${post.title.substring(0,70)}</div><p class="text-stone-500 text-sm mt-1 line-clamp-2">${post.excerpt.substring(0,90)}...</p><div class="mt-3 flex justify-between"><span class="text-xs text-stone-400">${formatDate(post.date)}</span><span class="text-emerald-700 text-sm font-medium">Read more →</span></div></div></div>`;
-        if ((idx + 1) % 3 === 0 && idx !== filtered.length - 1) {
+        if ((idx + 1) % 3 === 0 && idx !== toDisplay.length - 1) {
           html += `<div class="ad-card-dynamic w-full ad-feed-placeholder">
             <ins class="adsbygoogle"
                  style="display:block"
@@ -468,30 +481,29 @@
           adsToPush++;
         }
       });
-      
-      if (append) {
-        container.insertAdjacentHTML('beforeend', html);
-      } else {
-        container.innerHTML = html;
-      }
-      
+      container.innerHTML = html;
       for(let i=0; i<adsToPush; i++) {
         try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
       }
-      isFetchingMore = false;
+      document.querySelectorAll('.post-card-grid').forEach(card => card.addEventListener('click', () => { 
+        const title = card.getAttribute('data-title'); 
+        if(title) window.open(`blog-detail?title=${title}`, '_blank'); 
+      }));
+
+      if(loadMoreBtn) {
+         if(visiblePostsCount >= filtered.length) loadMoreBtn.classList.add("hidden");
+         else loadMoreBtn.classList.remove("hidden");
+      }
     }
 
     function renderPopularTopics() {
       const topics = getAllTags();
       const container = document.getElementById("popularTopicsContainer");
       container.innerHTML = topics.map(t => `<span data-topic="${t.name}" class="topic-chip-premium border border-stone-300 px-4 py-2 rounded-full text-sm font-medium ${currentTopic===t.name ? 'active-topic' : 'bg-white'}">#${t.name} (${t.count})</span>`).join('');
-      document.querySelectorAll("#popularTopicsContainer .topic-chip-premium").forEach(el => el.addEventListener("click", () => { 
-        currentTopic = (currentTopic === el.getAttribute("data-topic")) ? "" : el.getAttribute("data-topic"); 
-        displayedCount = 10;
-        renderAllDynamic(); 
-      }));
+      document.querySelectorAll("#popularTopicsContainer .topic-chip-premium").forEach(el => el.addEventListener("click", () => { currentTopic = (currentTopic === el.getAttribute("data-topic")) ? "" : el.getAttribute("data-topic"); visiblePostsCount = 6; renderAllDynamic(); }));
     }
 
+    // Fetch tags and render dynamic categories
     function renderDynamicCategories() {
       const cats = [...new Set(posts.map(p => p.category))].filter(Boolean).sort();
       const container = document.getElementById("dynamicCategoriesContainer");
@@ -509,8 +521,9 @@
         </div>`;
       }).join('');
       document.querySelectorAll(".category-card-premium").forEach(c => c.addEventListener("click", () => { 
-        const cat = c.getAttribute("data-cat");
-        window.location.href = `category?cat=${encodeURIComponent(cat)}`;
+        currentCategory = (currentCategory === c.getAttribute("data-cat")) ? "" : c.getAttribute("data-cat"); 
+        visiblePostsCount = 6;
+        renderAllDynamic(); 
       }));
     }
 
@@ -537,8 +550,8 @@
 
     function attachCardListeners() {
       document.querySelectorAll('.featured-premium-card, .slider-card-premium').forEach(card => card.addEventListener('click', (e) => { 
-        const slug = card.getAttribute('data-slug'); 
-        if(slug) window.location.href = `blog-detail?title=${slug}`; 
+        const title = card.getAttribute('data-title'); 
+        if(title) window.open(`blog-detail?title=${title}`, '_blank'); 
       }));
     }
 
@@ -548,7 +561,7 @@
 
     function resetFilters() {
       currentSearch = ""; currentCategory = ""; currentTopic = "";
-      displayedCount = 10;
+      visiblePostsCount = 6;
       document.getElementById("globalSearchInput") && (document.getElementById("globalSearchInput").value = "");
       document.getElementById("mobileSearchInput") && (document.getElementById("mobileSearchInput").value = "");
       renderAllDynamic();
@@ -559,9 +572,24 @@
     (async function init() {
       renderSkeletons();
       renderFooterCategories(); // Call immediately to use stored data
-      posts = await fetchPostsFromAPI();
-      renderDynamicCategories();
-      renderFooterCategories(); // Call again after fetching fresh data
+      
+      // 1. Load from LocalStorage (Instant UI)
+      const cachedPosts = localStorage.getItem('ayura_all_posts');
+      if (cachedPosts) {
+        try {
+          posts = JSON.parse(cachedPosts);
+          renderDynamicCategories();
+          renderAllDynamic();
+        } catch(e) {}
+      }
+
+      // 2. Fetch fresh data in background (Silent Update)
+      const freshPosts = await fetchPostsFromAPI();
+      if (freshPosts && freshPosts.length > 0) {
+        posts = freshPosts;
+        localStorage.setItem('ayura_all_posts', JSON.stringify(posts));
+        renderDynamicCategories();
+        renderFooterCategories(); // Call again after fetching fresh data
       
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -587,35 +615,17 @@
       renderDynamicCategories = () => { originalRenderCat(); setTimeout(observeCards, 100); };
 
       renderAllDynamic();
+      }
 
-      // Delegate click event for the dynamically rendered post cards in the grid
-      document.getElementById("allPostsGridContainer")?.addEventListener("click", (e) => {
-        const card = e.target.closest(".post-card-grid");
-        if (card) {
-          const slug = card.getAttribute("data-slug") || card.getAttribute("data-id");
-      if(slug) window.location.href = `blog-detail?title=${slug}`;
-        }
-      });
-
-      // Lazy Loading via Scroll
-      window.addEventListener('scroll', () => {
-        if (isFetchingMore) return;
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        // Load more when user is near bottom (400px threshold)
-        if (scrollTop + clientHeight >= scrollHeight - 400) {
-          const filtered = getFilteredPosts();
-          if (displayedCount < filtered.length) {
-            isFetchingMore = true;
-            displayedCount += 10;
-            renderAllPostsGridWithAds(true); // true means append
-            setTimeout(observeCards, 100);
-          }
-        }
-      });
-
-      document.getElementById("globalSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; displayedCount = 10; renderAllDynamic(); });
-      document.getElementById("mobileSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; displayedCount = 10; renderAllDynamic(); });
+      document.getElementById("globalSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; visiblePostsCount = 6; renderAllDynamic(); });
+      document.getElementById("mobileSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; visiblePostsCount = 6; renderAllDynamic(); });
       document.getElementById("resetFiltersBtn")?.addEventListener("click", resetFilters);
+      
+      document.getElementById("loadMoreBtn")?.addEventListener("click", () => {
+         visiblePostsCount += 6;
+         renderAllDynamic();
+      });
+
       const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({behavior:"smooth"}); };
       document.getElementById("desktopHomeLink")?.addEventListener("click", e => { e.preventDefault(); scrollTo("home"); });
       document.getElementById("desktopBlogsLink")?.addEventListener("click", e => { e.preventDefault(); scrollTo("all-posts-section"); });
@@ -627,3 +637,10 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
