@@ -50,6 +50,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .fade-up { animation: fadeUp 0.7s ease forwards; }
+    
+    .lazy-fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .lazy-fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* custom card & scroll styles */
     .premium-card { transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
@@ -455,7 +458,7 @@
       }
       document.querySelectorAll('.post-card-grid').forEach(card => card.addEventListener('click', () => { 
         const title = card.getAttribute('data-title'); 
-        if(title) window.location.href = `blog-detail?title=${title}`; 
+        if(title) window.open(`blog-detail?title=${title}`, '_blank'); 
       }));
     }
 
@@ -512,7 +515,7 @@
     function attachCardListeners() {
       document.querySelectorAll('.featured-premium-card, .slider-card-premium').forEach(card => card.addEventListener('click', (e) => { 
         const title = card.getAttribute('data-title'); 
-        if(title) window.location.href = `blog-detail?title=${title}`; 
+        if(title) window.open(`blog-detail?title=${title}`, '_blank'); 
       }));
     }
 
@@ -549,8 +552,32 @@
         posts = freshPosts;
         localStorage.setItem('ayura_all_posts', JSON.stringify(posts));
         renderDynamicCategories();
-        renderFooterCategories(); 
-        renderAllDynamic();
+        renderFooterCategories(); // Call again after fetching fresh data
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const observeCards = () => {
+        document.querySelectorAll('.post-card-grid, .featured-premium-card, .category-card-premium').forEach(el => {
+          if (!el.classList.contains('lazy-fade-up')) {
+            el.classList.add('lazy-fade-up');
+            observer.observe(el);
+          }
+        });
+      };
+
+      const originalRenderAll = renderAllDynamic;
+      renderAllDynamic = () => { originalRenderAll(); setTimeout(observeCards, 100); };
+      const originalRenderCat = renderDynamicCategories;
+      renderDynamicCategories = () => { originalRenderCat(); setTimeout(observeCards, 100); };
+
+      renderAllDynamic();
       }
 
       document.getElementById("globalSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; renderAllDynamic(); });

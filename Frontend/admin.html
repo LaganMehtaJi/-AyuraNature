@@ -39,7 +39,6 @@
   </style>
 </head>
 <body class="antialiased">
-<div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
 <!-- MAIN ADMIN CONTAINER (full page) -->
 <div id="adminApp" class="min-h-screen w-full flex flex-col">
@@ -50,7 +49,7 @@
       <div class="flex justify-center mb-8">
         <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-24 w-24 object-contain rounded-full bg-amber-50 p-2 border-2 border-emerald-100" loading="lazy" decoding="async">
       </div>
-      <h2 class="font-bold text-3xl text-stone-800">AyuraNature Admin</h2>
+      <h1 class="font-bold text-3xl text-stone-800">AyuraNature Admin</h1>
       <p class="text-stone-500 mb-6">Secure Content Management System</p>
       <div class="space-y-4">
         <input type="password" id="adminPasswordInput" placeholder="Enter admin password" class="w-full border border-stone-300 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500">
@@ -66,7 +65,7 @@
       <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
         <div class="flex items-center gap-3">
           <i class="fas fa-crown text-3xl text-amber-700"></i>
-          <h1 class="font-bold text-2xl md:text-3xl text-stone-800">Admin Dashboard — Blog Manager</h1>
+          <h2 class="font-bold text-2xl md:text-3xl text-stone-800">Admin Dashboard — Blog Manager</h2>
         </div>
         <button id="logoutBtn" class="bg-white border border-stone-300 px-4 py-2 rounded-full text-sm shadow-sm hover:bg-stone-100"><i class="fas fa-sign-out-alt mr-1"></i> Logout</button>
       </div>
@@ -93,7 +92,7 @@
 
       <!-- Global Settings: Ad controls (optional for preview) -->
       <div class="admin-card p-5">
-        <h3 class="font-bold text-lg mb-3"><i class="fas fa-sliders-h mr-2 text-amber-600"></i> Display Settings</h3>
+        <h2 class="font-bold text-lg mb-3"><i class="fas fa-sliders-h mr-2 text-amber-600"></i> Display Settings</h2>
         <div class="flex flex-wrap gap-6 items-center">
           <label class="inline-flex items-center gap-2"><input type="checkbox" id="enableAdsToggle"> <span>Enable Advertisement placeholders (demo)</span></label>
           <label class="inline-flex items-center gap-2"><input type="checkbox" id="showInlineAdsToggle"> <span>Show inline ads in blog grid</span></label>
@@ -110,7 +109,7 @@
 <div id="postModal" class="fixed inset-0 z-50 hidden modal-overlay flex justify-center items-center p-4 overflow-y-auto">
   <div class="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl">
     <div class="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-      <h3 id="modalTitle" class="font-serif text-2xl font-bold text-stone-800"><i class="fas fa-feather-alt mr-2 text-amber-600"></i> Edit / Create Blog</h3>
+      <h2 id="modalTitle" class="font-serif text-2xl font-bold text-stone-800"><i class="fas fa-feather-alt mr-2 text-amber-600"></i> Edit / Create Blog</h2>
       <button id="closeModalBtn" class="text-3xl leading-none text-stone-500 hover:text-stone-800">&times;</button>
     </div>
     <div class="p-6">
@@ -147,6 +146,36 @@
           <div><label class="font-semibold">Publish Date</label><input type="date" id="postDate" class="w-full border rounded-xl p-2.5"></div>
         </div>
         <div class="flex gap-4 items-center"><label class="flex items-center gap-2"><input type="checkbox" id="postFeatured"> <span>⭐ Feature this post (show on homepage)</span></label></div>
+
+        <!-- SEO Settings Section -->
+        <div class="border-t border-stone-200 pt-5 mt-5">
+          <div class="flex items-center gap-2 mb-4 cursor-pointer" onclick="document.getElementById('seoSection').classList.toggle('hidden')">
+            <i class="fas fa-search-plus text-amber-600"></i>
+            <h2 class="font-bold text-lg text-stone-800">SEO Settings</h2>
+            <span class="text-xs text-stone-400">(Optional — click to expand)</span>
+            <i class="fas fa-chevron-down text-stone-400 ml-auto"></i>
+          </div>
+          <div id="seoSection" class="hidden space-y-4">
+            <div>
+              <label class="font-semibold block mb-1">Meta Title <span class="text-xs text-stone-400">(Leave empty to use blog title)</span></label>
+              <input type="text" id="postMetaTitle" placeholder="Custom SEO title for search engines" class="w-full border border-stone-300 rounded-xl p-2.5">
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Meta Description <span class="text-xs text-stone-400">(Shows in Google results)</span></label>
+              <textarea id="postMetaDescription" rows="2" maxlength="160" placeholder="Write a compelling description (max 160 chars)" class="w-full border border-stone-300 rounded-xl p-2.5"></textarea>
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Keywords <span class="text-xs text-stone-400">(Comma separated SEO keywords)</span></label>
+              <input type="text" id="postKeywords" placeholder="e.g. ayurveda, natural remedies, health" class="w-full border border-stone-300 rounded-xl p-2.5">
+            </div>
+            <div>
+              <label class="font-semibold block mb-1">Meta Tags</label>
+              <div id="metaTagsContainer" class="space-y-2"></div>
+              <button type="button" id="addMetaTagBtn" class="mt-2 text-sm text-emerald-700 hover:text-emerald-900 font-medium"><i class="fas fa-plus-circle mr-1"></i> Add Meta Tag</button>
+            </div>
+          </div>
+        </div>
+
         <div class="flex justify-end gap-3 pt-4 border-t">
           <button type="button" id="cancelModalBtn" class="border border-stone-300 px-5 py-2 rounded-full">Cancel</button>
           <button type="submit" class="btn-primary px-6 py-2"><i class="fas fa-save mr-1"></i> Save Post</button>
@@ -158,7 +187,7 @@
 
 <script>
   // ---------- API ENDPOINT ----------
-  const API_BASE_URL = 'https://blogserver-backhend-1.onrender.com/api/posts';  const STORAGE_ADMIN_SETTINGS = 'ayuranature_admin_settings';
+  const API_BASE_URL = 'https://api.ayuranature.com/api/posts';  const STORAGE_ADMIN_SETTINGS = 'ayuranature_admin_settings';
   let blogPosts = [];
   let adminSettings = { adsEnabled: true, showInlineAds: true, adFrequency: 3 };
   let currentEditorDiv = null;
@@ -198,7 +227,7 @@
       <div class="post-list-item bg-white rounded-xl p-4 border border-stone-200 flex flex-wrap justify-between items-start gap-3">
         <div class="flex-1">
           <div class="flex items-center gap-2 flex-wrap">
-            <h3 class="font-bold text-stone-800">${escapeHtml(post.title.substring(0, 70))}</h3>
+            <h2 class="font-bold text-stone-800">${escapeHtml(post.title.substring(0, 70))}</h2>
             ${post.featured ? '<span class="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded-full">Featured</span>' : ''}
             <span class="text-xs text-stone-400">${post.date ? post.date.split('T')[0] : 'no date'}</span>
           </div>
@@ -282,6 +311,59 @@
   function setEditorContent(html) { if(currentEditorDiv) currentEditorDiv.innerHTML = html || '<p>Start writing your holistic article...</p>'; }
   
   // **************** CRUD MODAL ****************
+  // ========== META TAGS DYNAMIC UI ==========
+  function addMetaTagRow(name = '', content = '') {
+    const container = document.getElementById('metaTagsContainer');
+    const row = document.createElement('div');
+    row.className = 'flex gap-2 items-center';
+    row.innerHTML = `
+      <select class="meta-tag-name border border-stone-300 rounded-lg p-2 text-sm w-40">
+        <option value="keywords" ${name==='keywords'?'selected':''}>keywords</option>
+        <option value="author" ${name==='author'?'selected':''}>author</option>
+        <option value="robots" ${name==='robots'?'selected':''}>robots</option>
+        <option value="og:title" ${name==='og:title'?'selected':''}>og:title</option>
+        <option value="og:description" ${name==='og:description'?'selected':''}>og:description</option>
+        <option value="og:image" ${name==='og:image'?'selected':''}>og:image</option>
+        <option value="og:type" ${name==='og:type'?'selected':''}>og:type</option>
+        <option value="twitter:card" ${name==='twitter:card'?'selected':''}>twitter:card</option>
+        <option value="twitter:title" ${name==='twitter:title'?'selected':''}>twitter:title</option>
+        <option value="twitter:description" ${name==='twitter:description'?'selected':''}>twitter:description</option>
+        <option value="custom" ${!['keywords','author','robots','og:title','og:description','og:image','og:type','twitter:card','twitter:title','twitter:description'].includes(name) && name ? 'selected' : ''}>custom...</option>
+      </select>
+      <input type="text" class="meta-tag-custom border border-stone-300 rounded-lg p-2 text-sm w-28 ${['keywords','author','robots','og:title','og:description','og:image','og:type','twitter:card','twitter:title','twitter:description'].includes(name) || !name ? 'hidden' : ''}" placeholder="Custom name" value="${!['keywords','author','robots','og:title','og:description','og:image','og:type','twitter:card','twitter:title','twitter:description'].includes(name) && name ? escapeHtml(name) : ''}">
+      <input type="text" class="meta-tag-content flex-1 border border-stone-300 rounded-lg p-2 text-sm" placeholder="Content value" value="${escapeHtml(content)}">
+      <button type="button" class="text-red-500 hover:text-red-700 text-lg" onclick="this.parentElement.remove()">✕</button>
+    `;
+    // Show/hide custom input based on select
+    const select = row.querySelector('.meta-tag-name');
+    const customInput = row.querySelector('.meta-tag-custom');
+    select.addEventListener('change', () => {
+      if(select.value === 'custom') { customInput.classList.remove('hidden'); } 
+      else { customInput.classList.add('hidden'); }
+    });
+    container.appendChild(row);
+  }
+
+  function getMetaTagsFromUI() {
+    const rows = document.querySelectorAll('#metaTagsContainer > div');
+    const tags = [];
+    rows.forEach(row => {
+      const select = row.querySelector('.meta-tag-name');
+      const customInput = row.querySelector('.meta-tag-custom');
+      const contentInput = row.querySelector('.meta-tag-content');
+      let name = select.value === 'custom' ? customInput.value.trim() : select.value;
+      let content = contentInput.value.trim();
+      if(name && content) tags.push({ name, content });
+    });
+    return tags;
+  }
+
+  function clearMetaTags() {
+    document.getElementById('metaTagsContainer').innerHTML = '';
+  }
+
+  document.getElementById('addMetaTagBtn')?.addEventListener('click', () => addMetaTagRow());
+
   function openPostModal(postId = null) {
     const modal = document.getElementById("postModal");
     document.getElementById("editPostId").value = "";
@@ -297,6 +379,13 @@
     document.getElementById("postFeatured").checked = false;
     document.getElementById("postDate").value = new Date().toISOString().slice(0,10);
     document.getElementById("modalTitle").innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Create New Blog';
+    // Clear SEO fields
+    document.getElementById("postMetaTitle").value = "";
+    document.getElementById("postMetaDescription").value = "";
+    document.getElementById("postKeywords").value = "";
+    clearMetaTags();
+    document.getElementById("seoSection").classList.add("hidden");
+
     if(postId) {
       const post = blogPosts.find(p => p._id === postId);
       if(post) {
@@ -311,6 +400,14 @@
         document.getElementById("postFeatured").checked = post.featured || false;
         document.getElementById("postDate").value = post.date ? post.date.split('T')[0] : new Date().toISOString().slice(0,10);
         document.getElementById("modalTitle").innerHTML = '<i class="fas fa-edit mr-2"></i> Edit Blog Post';
+        // Pre-fill SEO fields
+        document.getElementById("postMetaTitle").value = post.metaTitle || "";
+        document.getElementById("postMetaDescription").value = post.metaDescription || "";
+        document.getElementById("postKeywords").value = post.keywords || "";
+        if(post.metaTags && post.metaTags.length > 0) {
+          post.metaTags.forEach(tag => addMetaTagRow(tag.name, tag.content));
+          document.getElementById("seoSection").classList.remove("hidden");
+        }
       }
     }
     // init rich editor instance after dom ready
@@ -344,6 +441,16 @@
     formData.append('tags', JSON.stringify(tags));
     formData.append('featured', featured);
     formData.append('date', date);
+
+    // SEO fields
+    const metaTitle = document.getElementById('postMetaTitle').value.trim();
+    const metaDescription = document.getElementById('postMetaDescription').value.trim();
+    const keywords = document.getElementById('postKeywords').value.trim();
+    const metaTags = getMetaTagsFromUI();
+    if(metaTitle) formData.append('metaTitle', metaTitle);
+    if(metaDescription) formData.append('metaDescription', metaDescription);
+    if(keywords) formData.append('keywords', keywords);
+    if(metaTags.length > 0) formData.append('metaTags', JSON.stringify(metaTags));
     
     if(outerImageFile) formData.append('outerImage', outerImageFile);
     if(outerImageUrl) formData.append('outerImageUrl', outerImageUrl);
@@ -367,13 +474,32 @@
         const data = await res.json();
         closeModal();
         loadData();
+        showToast(id ? "Post updated successfully!" : "Post added successfully!");
       }
     } catch(err) {
-      // Silent error
+      showToast("Error saving post!", "error");
     }
   }
 
   // ************ LOGIN / LOGOUT ************
+  function showToast(message, type = 'success') {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    const bgColor = type === 'success' ? 'bg-emerald-600' : 'bg-red-600';
+    toast.className = `${bgColor} text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 transform transition-all duration-300 translate-y-10 opacity-0`;
+    toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> <span>${message}</span>`;
+    container.appendChild(toast);
+    
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-10', 'opacity-0');
+    });
+
+    setTimeout(() => {
+      toast.classList.add('translate-y-10', 'opacity-0');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
   let isLoggedIn = false;
   function showLogin() { document.getElementById("loginSection").classList.remove("hidden"); document.getElementById("dashboardSection").classList.add("hidden"); isLoggedIn = false; }
   function showDashboard() { document.getElementById("loginSection").classList.add("hidden"); document.getElementById("dashboardSection").classList.remove("hidden"); isLoggedIn = true; loadData(); updateDashboardStats(); loadSettingsToUI(); }
@@ -411,3 +537,6 @@
 </script>
 </body>
 </html>
+
+
+

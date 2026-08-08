@@ -48,6 +48,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .fade-up { animation: fadeUp 0.7s ease forwards; }
+    
+    .lazy-fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .lazy-fade-up.visible { opacity: 1; transform: translateY(0); }
 
     .sticky-nav { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
     
@@ -249,6 +252,14 @@
       if(existingCanonical) existingCanonical.href = `https://www.ayuranature.com/blog-detail?title=${post.slug}`;
 
       document.querySelectorAll('meta[data-dynamic="true"]').forEach(el => el.remove());
+      
+      if(post.keywords) {
+        const mk = document.createElement('meta');
+        mk.setAttribute('data-dynamic', 'true');
+        mk.setAttribute('name', 'keywords');
+        mk.setAttribute('content', post.keywords);
+        document.head.appendChild(mk);
+      }
 
       if(post.metaTags && post.metaTags.length > 0) {
         post.metaTags.forEach(tag => {
@@ -299,6 +310,17 @@
 
       document.getElementById("loader").classList.add("hidden");
       document.getElementById("content").classList.remove("hidden");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.lazy-fade-up, .fade-up').forEach(el => observer.observe(el));
     }
 
     function renderFooterCategories() {

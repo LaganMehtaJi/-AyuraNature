@@ -46,6 +46,9 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .fade-up { animation: fadeUp 0.7s ease forwards; }
+    
+    .lazy-fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .lazy-fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* custom card & scroll styles */
     .premium-card { transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
@@ -399,7 +402,7 @@
       if (!featured.length) { container.innerHTML = ""; noMsg.classList.remove("hidden"); return; }
       noMsg.classList.add("hidden");
       container.innerHTML = featured.map(p => `
-        <div class="featured-premium-card" data-id="${p.id}">
+        <div class="featured-premium-card" data-slug="${p.slug}">
           ${isNewPost(p.date) ? '<div class="new-badge"><i class="fas fa-clock mr-1"></i>NEW 24h</div>' : ''}
           <img src="${p.image}" class="h-52 w-full object-cover" alt="${p.title}" loading="lazy" decoding="async">
           <div class="p-5"><span class="text-xs bg-emerald-50 px-3 py-1 rounded-full">${p.category}</span><h3 class="font-serif text-lg font-bold mt-2">${p.title.substring(0,55)}</h3><p class="text-stone-600 text-sm mt-2 line-clamp-3">${p.excerpt.substring(0,100)}...</p><div class="mt-4 flex justify-between"><span class="text-xs"><i class="far fa-calendar-alt"></i> ${formatDate(p.date)}</span><span class="text-emerald-700 font-medium">Read →</span></div></div>
@@ -415,7 +418,7 @@
       if (!recent.length) { track.innerHTML = ""; emptyMsg.classList.remove("hidden"); return; }
       emptyMsg.classList.add("hidden");
       track.innerHTML = recent.map(p => `
-        <div class="featured-premium-card" data-id="${p.id}">
+        <div class="featured-premium-card" data-slug="${p.slug}">
           ${isNewPost(p.date) ? '<div class="new-badge"><i class="fas fa-star"></i> Fresh</div>' : ''}
           <img src="${p.image}" class="h-52 w-full object-cover" alt="${p.title}" loading="lazy" decoding="async">
           <div class="p-5"><span class="text-xs text-amber-700 bg-amber-50 px-3 py-1 rounded-full">${p.category}</span><h3 class="font-serif text-lg font-bold mt-2">${p.title.substring(0,55)}</h3><p class="text-stone-600 text-sm mt-2 line-clamp-3">${p.excerpt.substring(0,100)}...</p><div class="mt-4 flex justify-between"><span class="text-xs"><i class="far fa-calendar-alt"></i> ${formatDate(p.date)}</span><span class="text-emerald-700 font-medium">Read →</span></div></div>
@@ -437,7 +440,7 @@
       let adsToPush = 0;
       toDisplay.forEach((post, i) => {
         const idx = startIndex + i;
-        html += `<div class="post-card-grid" data-id="${post.id}"><img src="${post.image}" class="h-52 w-full object-cover" alt="${post.title}" loading="lazy" decoding="async"><div class="p-5"><span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">${post.category}</span><h3 class="font-bold text-lg mt-2">${post.title.substring(0,70)}</h3><p class="text-stone-500 text-sm mt-1 line-clamp-2">${post.excerpt.substring(0,90)}...</p><div class="mt-3 flex justify-between"><span class="text-xs text-stone-400">${formatDate(post.date)}</span><span class="text-emerald-700 text-sm font-medium">Read more →</span></div></div></div>`;
+        html += `<div class="post-card-grid" data-slug="${post.slug}"><img src="${post.image}" class="h-52 w-full object-cover" alt="${post.title}" loading="lazy" decoding="async"><div class="p-5"><span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">${post.category}</span><h3 class="font-bold text-lg mt-2">${post.title.substring(0,70)}</h3><p class="text-stone-500 text-sm mt-1 line-clamp-2">${post.excerpt.substring(0,90)}...</p><div class="mt-3 flex justify-between"><span class="text-xs text-stone-400">${formatDate(post.date)}</span><span class="text-emerald-700 text-sm font-medium">Read more →</span></div></div></div>`;
         if ((idx + 1) % 3 === 0 && idx !== filtered.length - 1) {
           html += `<div class="ad-card-dynamic w-full ad-feed-placeholder">
             <ins class="adsbygoogle"
@@ -519,8 +522,8 @@
 
     function attachCardListeners() {
       document.querySelectorAll('.featured-premium-card, .slider-card-premium').forEach(card => card.addEventListener('click', (e) => { 
-        const id = card.getAttribute('data-id'); 
-        if(id) window.location.href = `blog-detail?id=${id}`; 
+        const slug = card.getAttribute('data-slug'); 
+        if(slug) window.location.href = `blog-detail?title=${slug}`; 
       }));
     }
 
@@ -544,6 +547,30 @@
       posts = await fetchPostsFromAPI();
       renderDynamicCategories();
       renderFooterCategories(); // Call again after fetching fresh data
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const observeCards = () => {
+        document.querySelectorAll('.post-card-grid, .featured-premium-card, .category-card-premium').forEach(el => {
+          if (!el.classList.contains('lazy-fade-up')) {
+            el.classList.add('lazy-fade-up');
+            observer.observe(el);
+          }
+        });
+      };
+
+      const originalRenderAll = renderAllDynamic;
+      renderAllDynamic = () => { originalRenderAll(); setTimeout(observeCards, 100); };
+      const originalRenderCat = renderDynamicCategories;
+      renderDynamicCategories = () => { originalRenderCat(); setTimeout(observeCards, 100); };
+
       renderAllDynamic();
 
       // Delegate click event for the dynamically rendered post cards in the grid
@@ -566,6 +593,7 @@
             isFetchingMore = true;
             displayedCount += 10;
             renderAllPostsGridWithAds(true); // true means append
+            setTimeout(observeCards, 100);
           }
         }
       });
