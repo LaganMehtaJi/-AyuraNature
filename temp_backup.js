@@ -1,211 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>AyuraNature | Admin Panel</title>
-  <!-- Tailwind + Font Awesome + Chart.js -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { font-family: 'Inter', sans-serif; }
-    body { background: #f1efe7; }
-    .rich-editor { min-height: 280px; border: 1px solid #d6c8b8; border-radius: 1rem; padding: 1rem; background: white; line-height: 1.6; overflow-y: auto; }
-    .rich-editor:focus { outline: none; border-color: #2c5e2e; }
-    .rich-editor h2 { font-size: 1.6rem; font-weight: 700; margin: 0.75rem 0 0.4rem; font-family: inherit; }
-    .rich-editor h3 { font-size: 1.3rem; font-weight: 600; margin: 0.6rem 0 0.3rem; }
-    .rich-editor ul, .rich-editor ol { margin-left: 1.5rem; margin-bottom: 0.8rem; }
-    .rich-editor table { border-collapse: collapse; width: 100%; margin: 1rem 0; background: white; }
-    .rich-editor th, .rich-editor td { border: 1px solid #bbb; padding: 8px; text-align: left; }
-    .editor-toolbar button { background: #ede6dd; border: 1px solid #d1c0ab; padding: 6px 12px; border-radius: 40px; margin: 0 3px; font-size: 13px; transition: 0.2s; cursor: pointer; }
-    .editor-toolbar button:hover { background: #b88d5e; color: white; }
-    .admin-card { background: white; border-radius: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-    .admin-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
-    .post-list-item { transition: background 0.15s; border: 1px solid #f0e4d4; }
-    .post-list-item:hover { background: #fef6e8; border-color: #cb9e6b; }
-    @media (max-width: 640px) {
-      .admin-card { border-radius: 1rem; padding: 1rem; }
-      .btn-primary, .btn-secondary, .btn-outline { width: 100%; text-align: center; }
-      .editor-toolbar button { padding: 4px 8px; font-size: 12px; }
-    }
-    .btn-primary { background: #2c5e2e; color: white; border-radius: 2rem; padding: 0.5rem 1.2rem; font-weight: 500; }
-    .btn-primary:hover { background: #1f4521; }
-    .btn-secondary { background: #6f4e2e; color: white; border-radius: 2rem; padding: 0.5rem 1.2rem; }
-    .btn-outline { border: 1px solid #c7b59e; border-radius: 2rem; padding: 0.4rem 1rem; background: white; }
-    .modal-overlay { background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); }
-    .chart-preview { background: #faf6f0; border-radius: 1rem; padding: 0.8rem; margin: 0.5rem 0; }
-  </style>
-</head>
-<body class="antialiased">
 
-<!-- MAIN ADMIN CONTAINER (full page) -->
-<div id="adminApp" class="min-h-screen w-full flex flex-col">
-
-  <!-- LOGIN SECTION (visible until login) -->
-  <div id="loginSection" class="flex-1 flex items-center justify-center p-6">
-    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center">
-      <div class="flex justify-center mb-8">
-        <img src="./publc/Ayuralogo.png" alt="AyuraNature Logo" class="h-24 w-24 object-contain rounded-full bg-amber-50 p-2 border-2 border-emerald-100" loading="lazy" decoding="async">
-      </div>
-      <h1 class="font-bold text-3xl text-stone-800">AyuraNature Admin</h1>
-      <p class="text-stone-500 mb-6">Secure Content Management System</p>
-      <div class="space-y-4">
-        <input type="password" id="adminPasswordInput" placeholder="Enter admin password" class="w-full border border-stone-300 rounded-full px-5 py-2.5 focus:outline-none focus:ring-2 focus:ring-amber-500">
-        <button id="loginBtn" class="w-full bg-stone-800 hover:bg-stone-900 text-white font-semibold py-2.5 rounded-full transition"><i class="fas fa-lock mr-2"></i> Login</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- DASHBOARD (hidden until login) -->
-  <div id="dashboardSection" class="hidden flex-1 p-5 md:p-8 bg-[#f8f5ef]">
-    <div class="max-w-7xl mx-auto">
-      <!-- Header -->
-      <div class="flex flex-wrap justify-between items-center mb-8 gap-4">
-        <div class="flex items-center gap-3">
-          <i class="fas fa-crown text-3xl text-amber-700"></i>
-          <h2 class="font-bold text-2xl md:text-3xl text-stone-800">Admin Dashboard — Blog Manager</h2>
-        </div>
-        <button id="logoutBtn" class="bg-white border border-stone-300 px-4 py-2 rounded-full text-sm shadow-sm hover:bg-stone-100"><i class="fas fa-sign-out-alt mr-1"></i> Logout</button>
-      </div>
-
-      <!-- Quick actions + stats -->
-      <div class="grid md:grid-cols-3 gap-5 mb-8">
-        <div class="admin-card p-5 flex justify-between items-center"><div><p class="text-stone-500 text-sm">Total Blogs</p><p id="totalPostsCount" class="text-3xl font-bold text-stone-800">0</p></div><i class="fas fa-newspaper text-4xl text-amber-600/60"></i></div>
-        <div class="admin-card p-5 flex justify-between items-center"><div><p class="text-stone-500 text-sm">Featured Stories</p><p id="featuredCount" class="text-3xl font-bold text-stone-800">0</p></div><i class="fas fa-star text-4xl text-amber-600/60"></i></div>
-        <button id="newPostMainBtn" class="admin-card p-5 bg-emerald-50 hover:bg-emerald-100 transition flex justify-between items-center"><div class="text-left"><p class="font-semibold text-emerald-800">Create New Blog</p><p class="text-sm text-emerald-600">Rich editor + graphs</p></div><i class="fas fa-plus-circle text-3xl text-emerald-700"></i></button>
-      </div>
-
-      <!-- Blog posts list (CRUD) -->
-      <div class="admin-card p-5 mb-8">
-        <div class="flex flex-wrap justify-between items-center mb-4 gap-3">
-          <h2 class="font-bold text-xl text-stone-800"><i class="fas fa-list-ul mr-2 text-amber-600"></i> All Blog Posts</h2>
-          <div class="flex gap-2">
-            <input type="text" id="adminSearchInput" placeholder="Filter by title..." class="border rounded-full px-4 py-1.5 text-sm w-48">
-            <button id="refreshPostListBtn" class="bg-stone-100 px-3 rounded-full"><i class="fas fa-sync-alt"></i></button>
-          </div>
-        </div>
-        <div id="postsListContainer" class="max-h-[450px] overflow-y-auto space-y-2 pr-1"></div>
-        <div id="noPostsMsg" class="text-center py-8 text-stone-400 hidden">No blog posts yet. Click "Create New Blog" to start.</div>
-      </div>
-
-      <!-- Global Settings: Ad controls (optional for preview) -->
-      <div class="admin-card p-5">
-        <h2 class="font-bold text-lg mb-3"><i class="fas fa-sliders-h mr-2 text-amber-600"></i> Display Settings</h2>
-        <div class="flex flex-wrap gap-6 items-center">
-          <label class="inline-flex items-center gap-2"><input type="checkbox" id="enableAdsToggle"> <span>Enable Advertisement placeholders (demo)</span></label>
-          <label class="inline-flex items-center gap-2"><input type="checkbox" id="showInlineAdsToggle"> <span>Show inline ads in blog grid</span></label>
-          <div><span class="text-sm">Ad frequency:</span> <input type="number" id="adFreqInput" min="2" max="6" value="3" class="border rounded w-16 px-2 py-1 mx-2"></div>
-          <button id="saveSettingsBtn" class="btn-outline text-sm">Save Settings</button>
-        </div>
-        <p class="text-xs text-stone-400 mt-4"><i class="fas fa-info-circle"></i> These settings affect the public blog preview; stored locally.</p>
-      </div>
-
-      <!-- Global SEO Settings -->
-      <div class="admin-card p-5 mt-8">
-        <h2 class="font-bold text-lg mb-3"><i class="fas fa-globe mr-2 text-amber-600"></i> Global SEO Settings (Home & Index)</h2>
-        <div class="space-y-4 max-w-3xl">
-          <div>
-            <label class="font-semibold block mb-1 text-sm">Site Meta Title</label>
-            <input type="text" id="globalMetaTitle" placeholder="e.g. AyuraNature - Ayurvedic Home Remedies" class="w-full border rounded-lg px-3 py-2 text-sm">
-          </div>
-          <div>
-            <label class="font-semibold block mb-1 text-sm">Site Meta Description</label>
-            <textarea id="globalMetaDesc" rows="2" placeholder="Describe the site for search engines..." class="w-full border rounded-lg px-3 py-2 text-sm"></textarea>
-          </div>
-          <div>
-            <label class="font-semibold block mb-1 text-sm">Site Meta Keywords</label>
-            <input type="text" id="globalMetaKeywords" placeholder="ayurveda, health, natural remedies" class="w-full border rounded-lg px-3 py-2 text-sm">
-          </div>
-          <button id="saveGlobalSeoBtn" class="btn-primary text-sm px-6 py-2"><i class="fas fa-save mr-1"></i> Update SEO Tags</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: EDIT / CREATE POST (Rich Editor + Table + Graph) -->
-<div id="postModal" class="fixed inset-0 z-50 hidden modal-overlay flex justify-center items-center p-4 overflow-y-auto">
-  <div class="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl">
-    <div class="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-      <h2 id="modalTitle" class="font-serif text-2xl font-bold text-stone-800"><i class="fas fa-feather-alt mr-2 text-amber-600"></i> Edit / Create Blog</h2>
-      <button id="closeModalBtn" class="text-3xl leading-none text-stone-500 hover:text-stone-800">&times;</button>
-    </div>
-    <div class="p-6">
-      <form id="blogPostForm" class="space-y-5">
-        <input type="hidden" id="editPostId">
-        <div><label class="font-semibold block mb-1">Title *</label><input type="text" id="postTitle" class="w-full border border-stone-300 rounded-xl p-2.5" required></div>
-        <div><label class="font-semibold block mb-1">Short Excerpt (max 160 chars)</label><textarea id="postExcerpt" rows="2" class="w-full border border-stone-300 rounded-xl p-2.5" required></textarea></div>
-        
-        <!-- Rich Editor Toolbar -->
-        <div><label class="font-semibold block mb-1">Full Content (Rich Text)</label>
-          <div class="editor-toolbar flex flex-wrap gap-1 mb-2">
-            <button type="button" data-cmd="bold" title="Bold"><i class="fas fa-bold"></i></button>
-            <button type="button" data-cmd="italic" title="Italic"><i class="fas fa-italic"></i></button>
-            <button type="button" data-cmd="underline" title="Underline"><i class="fas fa-underline"></i></button>
-            <button type="button" data-cmd="formatBlock" data-value="h2"><i class="fas fa-heading"></i> H2</button>
-            <button type="button" data-cmd="formatBlock" data-value="h3"><i class="fas fa-heading"></i> H3</button>
-            <button type="button" data-cmd="insertUnorderedList"><i class="fas fa-list-ul"></i> Bullets</button>
-            <button type="button" data-cmd="insertOrderedList"><i class="fas fa-list-ol"></i> Numbered</button>
-            <button type="button" id="insertTableBtn"><i class="fas fa-table"></i> Insert Table</button>
-            <button type="button" id="insertGraphBtn"><i class="fas fa-chart-bar"></i> Insert Chart</button>
-            <button type="button" id="clearFormatBtn"><i class="fas fa-eraser"></i> Clear</button>
-          </div>
-          <div id="richEditor" class="rich-editor" contenteditable="true"></div>
-          <textarea id="postContentHidden" class="hidden"></textarea>
-        </div>
-        
-        <div class="grid md:grid-cols-2 gap-4">
-          <div><label class="font-semibold">Category</label><input type="text" id="postCategory" placeholder="e.g., Ayurveda & Natural Remedies" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Tags (comma separated)</label><input type="text" id="postTags" placeholder="Yoga, Herbs, Meditation" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Outer Image - For Card (Upload)</label><input type="file" id="postOuterImageFile" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Outer Image URL (Optional fallback)</label><input type="url" id="postOuterImage" placeholder="https://..." class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Inner Image - For Read (Upload)</label><input type="file" id="postInnerImageFile" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Inner Image URL (Optional fallback)</label><input type="url" id="postInnerImage" placeholder="https://..." class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Publish Date</label><input type="date" id="postDate" class="w-full border rounded-xl p-2.5"></div>
-        </div>
-        <div class="flex gap-4 items-center"><label class="flex items-center gap-2"><input type="checkbox" id="postFeatured"> <span>⭐ Feature this post (show on homepage)</span></label></div>
-
-        <!-- SEO Settings Section -->
-        <div class="border-t border-stone-200 pt-5 mt-5">
-          <div class="flex items-center gap-2 mb-4 cursor-pointer" onclick="document.getElementById('seoSection').classList.toggle('hidden')">
-            <i class="fas fa-search-plus text-amber-600"></i>
-            <h2 class="font-bold text-lg text-stone-800">SEO Settings</h2>
-            <span class="text-xs text-stone-400">(Click to collapse)</span>
-            <i class="fas fa-chevron-down text-stone-400 ml-auto"></i>
-          </div>
-          <div id="seoSection" class="space-y-4">
-            <div>
-              <label class="font-semibold block mb-1">Meta Title <span class="text-xs text-stone-400">(Leave empty to use blog title)</span></label>
-              <input type="text" id="postMetaTitle" placeholder="Custom SEO title for search engines" class="w-full border border-stone-300 rounded-xl p-2.5">
-            </div>
-            <div>
-              <label class="font-semibold block mb-1">Meta Description <span class="text-xs text-stone-400">(Shows in Google results)</span></label>
-              <textarea id="postMetaDescription" rows="2" maxlength="160" placeholder="Write a compelling description (max 160 chars)" class="w-full border border-stone-300 rounded-xl p-2.5"></textarea>
-            </div>
-            <div>
-              <label class="font-semibold block mb-1">Keywords <span class="text-xs text-stone-400">(Comma separated SEO keywords)</span></label>
-              <input type="text" id="postKeywords" placeholder="e.g. ayurveda, natural remedies, health" class="w-full border border-stone-300 rounded-xl p-2.5">
-            </div>
-            <div>
-              <label class="font-semibold block mb-1">Meta Tags</label>
-              <div id="metaTagsContainer" class="space-y-2"></div>
-              <button type="button" id="addMetaTagBtn" class="mt-2 text-sm text-emerald-700 hover:text-emerald-900 font-medium"><i class="fas fa-plus-circle mr-1"></i> Add Meta Tag</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex justify-end gap-3 pt-4 border-t">
-          <button type="button" id="cancelModalBtn" class="border border-stone-300 px-5 py-2 rounded-full">Cancel</button>
-          <button type="submit" class="btn-primary px-6 py-2"><i class="fas fa-save mr-1"></i> Save Post</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<script>
   // ---------- API ENDPOINT ----------
   const API_BASE_URL = 'https://api.ayuranature.com/api/posts';  const STORAGE_ADMIN_SETTINGS = 'ayuranature_admin_settings';
   let blogPosts = [];
@@ -402,8 +195,8 @@
     // Clear SEO fields
     document.getElementById("postMetaTitle").value = "";
     document.getElementById("postMetaDescription").value = "";
-    document.getElementById("postKeywords").value = "";
     clearMetaTags();
+    document.getElementById("seoSection").classList.add("hidden");
 
     if(postId) {
       const post = blogPosts.find(p => p._id === postId);
@@ -422,9 +215,9 @@
         // Pre-fill SEO fields
         document.getElementById("postMetaTitle").value = post.metaTitle || "";
         document.getElementById("postMetaDescription").value = post.metaDescription || "";
-        document.getElementById("postKeywords").value = post.keywords || "";
         if(post.metaTags && post.metaTags.length > 0) {
           post.metaTags.forEach(tag => addMetaTagRow(tag.name, tag.content));
+          document.getElementById("seoSection").classList.remove("hidden");
         }
       }
     }
@@ -463,11 +256,9 @@
     // SEO fields
     const metaTitle = document.getElementById('postMetaTitle').value.trim();
     const metaDescription = document.getElementById('postMetaDescription').value.trim();
-    const keywords = document.getElementById('postKeywords').value.trim();
     const metaTags = getMetaTagsFromUI();
     if(metaTitle) formData.append('metaTitle', metaTitle);
     if(metaDescription) formData.append('metaDescription', metaDescription);
-    if(keywords) formData.append('keywords', keywords);
     if(metaTags.length > 0) formData.append('metaTags', JSON.stringify(metaTags));
     
     if(outerImageFile) formData.append('outerImage', outerImageFile);
@@ -492,35 +283,13 @@
         const data = await res.json();
         closeModal();
         loadData();
-        showToast(id ? "Post updated successfully!" : "Post added successfully!");
-      } else {
-        const errData = await res.json().catch(() => ({}));
-        showToast(errData.message || "Failed to save post", "error");
       }
     } catch(err) {
-      showToast("Error saving post! Connection failed.", "error");
+      // Silent error
     }
   }
 
   // ************ LOGIN / LOGOUT ************
-  function showToast(message, type = 'success') {
-    const container = document.getElementById("toastContainer");
-    const toast = document.createElement("div");
-    const bgColor = type === 'success' ? 'bg-emerald-600' : 'bg-red-600';
-    toast.className = `${bgColor} text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 transform transition-all duration-300 translate-y-10 opacity-0`;
-    toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> <span>${message}</span>`;
-    container.appendChild(toast);
-    
-    requestAnimationFrame(() => {
-      toast.classList.remove('translate-y-10', 'opacity-0');
-    });
-
-    setTimeout(() => {
-      toast.classList.add('translate-y-10', 'opacity-0');
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
-
   let isLoggedIn = false;
   function showLogin() { document.getElementById("loginSection").classList.remove("hidden"); document.getElementById("dashboardSection").classList.add("hidden"); isLoggedIn = false; }
   function showDashboard() { document.getElementById("loginSection").classList.add("hidden"); document.getElementById("dashboardSection").classList.remove("hidden"); isLoggedIn = true; loadData(); updateDashboardStats(); loadSettingsToUI(); }
@@ -552,34 +321,6 @@
   // close modal on overlay click? optional
   window.addEventListener("click", (e) => { if(e.target === document.getElementById("postModal")) closeModal(); });
   
-  document.getElementById("saveGlobalSeoBtn")?.addEventListener("click", async () => {
-    const title = document.getElementById("globalMetaTitle").value;
-    const desc = document.getElementById("globalMetaDesc").value;
-    const keywords = document.getElementById("globalMetaKeywords").value;
-    
-    try {
-      const res = await fetch('/api/settings/update-home-seo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description: desc, keywords })
-      });
-      const data = await res.json();
-      if(data.success) {
-        showToast("Global SEO settings saved to index.html & home.html!");
-      } else {
-        alert("Failed to save SEO settings.");
-      }
-    } catch (err) {
-      alert("Error saving SEO settings.");
-    }
-  });
-  
   // initial load
   showLogin(); // start with login screen
   // populate settings ui later when dashboard shown
-</script>
-</body>
-</html>
-
-
-

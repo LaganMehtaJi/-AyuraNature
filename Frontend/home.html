@@ -194,8 +194,12 @@
   </header>
 
   <main id="mainHomeView">
-    <section id="home" class="hero-banner-premium w-full">
-      <img src="./publc/Hero.jpeg" alt="AyuraNature Wellness Banner" fetchpriority="high" width="1200" height="500" class="w-full h-auto">
+    <section id="home" class="hero-banner-premium w-full relative">
+      <img src="./publc/Hero.jpeg" alt="AyuraNature Wellness Banner" fetchpriority="high" width="1200" height="500" class="w-full h-auto object-cover max-h-[500px]">
+      <div class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center pointer-events-none">
+         <h1 class="text-white text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-center px-6 drop-shadow-xl">AyuraNature</h1>
+         <p class="text-white text-lg md:text-2xl mt-4 font-medium drop-shadow-md text-center max-w-2xl px-4">Ayurvedic Home Remedies & Holistic Wellness</p>
+      </div>
     </section>
 
     <!-- Categories section (dynamic from API) -->
