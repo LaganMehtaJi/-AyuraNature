@@ -300,7 +300,9 @@
       document.getElementById("detailDate").innerHTML = `<i class="far fa-calendar-alt mr-1"></i> ${formatDate(post.date)}`;
       document.getElementById("detailTitle").innerText = post.title;
       document.getElementById("detailTags").innerHTML = post.tags.map(t => `<span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-medium">#${t}</span>`).join('');
-      document.getElementById("detailFullContent").innerHTML = post.fullContent || `<p>${post.excerpt}</p>`;
+      let safeContent = post.fullContent || `<p>${post.excerpt}</p>`;
+      safeContent = safeContent.replace(/<h1(\s[^>]*)?>/gi, '<h2$1>').replace(/<\/h1>/gi, '</h2>');
+      document.getElementById("detailFullContent").innerHTML = safeContent;
       
       const url = window.location.href;
       const text = post.title;
