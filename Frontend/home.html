@@ -365,6 +365,7 @@
         return apiPosts.map(p => ({
           id: p._id,
           title: p.title,
+          slug: p.slug || encodeURIComponent((p.title || "").replace(/\s+/g, '-')),
           excerpt: p.excerpt,
           category: p.category,
           tags: p.tags,
