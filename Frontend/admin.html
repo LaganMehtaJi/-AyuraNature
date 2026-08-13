@@ -387,6 +387,10 @@
     return tags;
   }
 
+  function clearMetaTags() {
+    document.getElementById('metaTagsContainer').innerHTML = '';
+  }
+
   document.getElementById('addMetaTagBtn')?.addEventListener('click', () => addMetaTagRow());
 
   // ========== GLOBAL META TAGS UI ==========
@@ -502,7 +506,10 @@
     const innerImageUrl = document.getElementById("postInnerImage").value.trim();
     const innerImageFile = document.getElementById("postInnerImageFile").files[0];
 
-    if(!title || !excerpt) return alert("Title and Excerpt are required");
+    if(!title || !excerpt || !category || !fullContent || fullContent === "<p><br></p>") {
+      showToast("Title, Excerpt, Category and Content are required", "error");
+      return;
+    }
 
     const formData = new FormData();
     formData.append('title', title);
