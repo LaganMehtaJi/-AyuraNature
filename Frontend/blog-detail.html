@@ -253,16 +253,39 @@
 
       document.querySelectorAll('meta[data-dynamic="true"]').forEach(el => el.remove());
       
-      if(post.keywords) {
+      // Gather all keywords from different sources
+      let allKeywords = new Set();
+      
+      if (post.keywords) {
+        post.keywords.split(',').forEach(k => allKeywords.add(k.trim()));
+      }
+      
+      if (post.tags && Array.isArray(post.tags)) {
+        post.tags.forEach(t => allKeywords.add(t.trim()));
+      }
+
+      if (post.metaTags && post.metaTags.length > 0) {
+        post.metaTags.forEach(tag => {
+          if (tag.name === 'keywords') {
+            tag.content.split(',').forEach(k => allKeywords.add(k.trim()));
+          }
+        });
+      }
+
+      // Remove empty strings
+      allKeywords.delete('');
+
+      if (allKeywords.size > 0) {
         const mk = document.createElement('meta');
         mk.setAttribute('data-dynamic', 'true');
         mk.setAttribute('name', 'keywords');
-        mk.setAttribute('content', post.keywords);
+        mk.setAttribute('content', Array.from(allKeywords).join(', '));
         document.head.appendChild(mk);
       }
 
       if(post.metaTags && post.metaTags.length > 0) {
         post.metaTags.forEach(tag => {
+          if (tag.name === 'keywords') return; // already handled above
           const meta = document.createElement('meta');
           meta.setAttribute('data-dynamic', 'true');
           if(tag.name.startsWith('og:')) meta.setAttribute('property', tag.name);
