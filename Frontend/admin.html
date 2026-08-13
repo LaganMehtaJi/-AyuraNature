@@ -210,6 +210,9 @@
   </div>
 </div>
 
+<!-- Toast Container -->
+<div id="toastContainer" class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
 <script>
   // ---------- API ENDPOINT ----------
   const API_BASE_URL = 'https://api.ayuranature.com/api/posts';  const STORAGE_ADMIN_SETTINGS = 'ayuranature_admin_settings';
@@ -276,9 +279,10 @@
             blogPosts = blogPosts.filter(p => p._id !== id);
             renderPostsList(document.getElementById("adminSearchInput").value);
             updateDashboardStats();
+            showToast("Post deleted successfully!");
           }
         } catch(err) {
-          // Silent error
+          showToast("Error deleting post", "error");
         }
       } 
     }));
