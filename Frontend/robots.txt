@@ -1,4 +1,5 @@
 # Robots.txt for AyuraNature - https://ayuranature.com
+# Last Updated: 2026-08-13 (Cache busted)
 User-agent: *
 Allow: /
 Allow: /home

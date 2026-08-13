@@ -446,7 +446,7 @@
       attachCardListeners();
     }
 
-    let visiblePostsCount = 6;
+    let visiblePostsCount = 8;
     function renderAllPostsGridWithAds() {
       const filtered = getFilteredPosts();
       const container = document.getElementById("allPostsGridContainer");
@@ -498,7 +498,7 @@
       const topics = getAllTags();
       const container = document.getElementById("popularTopicsContainer");
       container.innerHTML = topics.map(t => `<span data-topic="${t.name}" class="topic-chip-premium border border-stone-300 px-4 py-2 rounded-full text-sm font-medium ${currentTopic===t.name ? 'active-topic' : 'bg-white'}">#${t.name} (${t.count})</span>`).join('');
-      document.querySelectorAll("#popularTopicsContainer .topic-chip-premium").forEach(el => el.addEventListener("click", () => { currentTopic = (currentTopic === el.getAttribute("data-topic")) ? "" : el.getAttribute("data-topic"); visiblePostsCount = 6; renderAllDynamic(); }));
+      document.querySelectorAll("#popularTopicsContainer .topic-chip-premium").forEach(el => el.addEventListener("click", () => { currentTopic = (currentTopic === el.getAttribute("data-topic")) ? "" : el.getAttribute("data-topic"); visiblePostsCount = 8; renderAllDynamic(); }));
     }
 
     // Fetch tags and render dynamic categories
@@ -520,7 +520,7 @@
       }).join('');
       document.querySelectorAll(".category-card-premium").forEach(c => c.addEventListener("click", () => { 
         currentCategory = (currentCategory === c.getAttribute("data-cat")) ? "" : c.getAttribute("data-cat"); 
-        visiblePostsCount = 6;
+        visiblePostsCount = 8;
         renderAllDynamic(); 
       }));
     }
@@ -559,7 +559,7 @@
 
     function resetFilters() {
       currentSearch = ""; currentCategory = ""; currentTopic = "";
-      visiblePostsCount = 6;
+      visiblePostsCount = 8;
       document.getElementById("globalSearchInput") && (document.getElementById("globalSearchInput").value = "");
       document.getElementById("mobileSearchInput") && (document.getElementById("mobileSearchInput").value = "");
       renderAllDynamic();
@@ -568,6 +568,30 @@
     function showToast(msg) { let t=document.querySelector('.toast-notify'); if(t) t.remove(); const div=document.createElement('div'); div.className='toast-notify'; div.innerHTML=`<i class="fas fa-leaf mr-2"></i>${msg}`; document.body.appendChild(div); setTimeout(()=>div.remove(),2500); }
 
     (async function init() {
+      // 0. Fetch Global SEO
+      try {
+        fetch('https://api.ayuranature.com/api/settings/home-seo').then(res => res.json()).then(data => {
+          if(data) {
+            if(data.metaTitle) document.title = data.metaTitle;
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if(metaDesc && data.metaDescription) metaDesc.setAttribute('content', data.metaDescription);
+            const metaKey = document.querySelector('meta[name="keywords"]');
+            if(metaKey && data.keywords) metaKey.setAttribute('content', data.keywords);
+            
+            if(data.metaTags && data.metaTags.length > 0) {
+              data.metaTags.forEach(tag => {
+                const meta = document.createElement('meta');
+                if(tag.name.startsWith('og:')) meta.setAttribute('property', tag.name);
+                else if(tag.name.startsWith('twitter:')) meta.setAttribute('name', tag.name);
+                else meta.setAttribute('name', tag.name);
+                meta.setAttribute('content', tag.content);
+                document.head.appendChild(meta);
+              });
+            }
+          }
+        }).catch(err => console.error(err));
+      } catch(e) {}
+
       renderSkeletons();
       renderFooterCategories(); // Call immediately to use stored data
       
@@ -615,12 +639,12 @@
       renderAllDynamic();
       }
 
-      document.getElementById("globalSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; visiblePostsCount = 6; renderAllDynamic(); });
-      document.getElementById("mobileSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; visiblePostsCount = 6; renderAllDynamic(); });
+      document.getElementById("globalSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; visiblePostsCount = 8; renderAllDynamic(); });
+      document.getElementById("mobileSearchInput")?.addEventListener("input", e => { currentSearch = e.target.value; visiblePostsCount = 8; renderAllDynamic(); });
       document.getElementById("resetFiltersBtn")?.addEventListener("click", resetFilters);
       
       document.getElementById("loadMoreBtn")?.addEventListener("click", () => {
-         visiblePostsCount += 6;
+         visiblePostsCount += 8;
          renderAllDynamic();
       });
 

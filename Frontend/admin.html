@@ -115,8 +115,13 @@
             <textarea id="globalMetaDesc" rows="2" placeholder="Describe the site for search engines..." class="w-full border rounded-lg px-3 py-2 text-sm"></textarea>
           </div>
           <div>
-            <label class="font-semibold block mb-1 text-sm">Site Meta Keywords</label>
+            <label class="font-semibold block mb-1 text-sm">Site Meta Keywords <span class="text-xs text-stone-400">(Comma separated)</span></label>
             <input type="text" id="globalMetaKeywords" placeholder="ayurveda, health, natural remedies" class="w-full border rounded-lg px-3 py-2 text-sm">
+          </div>
+          <div>
+            <label class="font-semibold block mb-1 text-sm">Global Meta Tags</label>
+            <div id="globalMetaTagsContainer" class="space-y-2 mb-2"></div>
+            <button type="button" id="addGlobalMetaTagBtn" class="text-sm text-emerald-700 hover:text-emerald-900 font-medium"><i class="fas fa-plus-circle mr-1"></i> Add Meta Tag</button>
           </div>
           <button id="saveGlobalSeoBtn" class="btn-primary text-sm px-6 py-2"><i class="fas fa-save mr-1"></i> Update SEO Tags</button>
         </div>
@@ -378,11 +383,55 @@
     return tags;
   }
 
-  function clearMetaTags() {
-    document.getElementById('metaTagsContainer').innerHTML = '';
+  document.getElementById('addMetaTagBtn')?.addEventListener('click', () => addMetaTagRow());
+
+  // ========== GLOBAL META TAGS UI ==========
+  function addGlobalMetaTagRow(name = '', content = '') {
+    const container = document.getElementById('globalMetaTagsContainer');
+    const row = document.createElement('div');
+    row.className = 'flex gap-2 items-center';
+    row.innerHTML = `
+      <select class="global-meta-tag-name border border-stone-300 rounded-lg p-2 text-sm w-40">
+        <option value="author" ${name==='author'?'selected':''}>author</option>
+        <option value="robots" ${name==='robots'?'selected':''}>robots</option>
+        <option value="og:title" ${name==='og:title'?'selected':''}>og:title</option>
+        <option value="og:description" ${name==='og:description'?'selected':''}>og:description</option>
+        <option value="og:image" ${name==='og:image'?'selected':''}>og:image</option>
+        <option value="og:type" ${name==='og:type'?'selected':''}>og:type</option>
+        <option value="custom" ${!['author','robots','og:title','og:description','og:image','og:type'].includes(name) && name ? 'selected' : ''}>custom...</option>
+      </select>
+      <input type="text" class="global-meta-tag-custom border border-stone-300 rounded-lg p-2 text-sm w-28 ${['author','robots','og:title','og:description','og:image','og:type'].includes(name) || !name ? 'hidden' : ''}" placeholder="Custom name" value="${!['author','robots','og:title','og:description','og:image','og:type'].includes(name) && name ? escapeHtml(name) : ''}">
+      <input type="text" class="global-meta-tag-content flex-1 border border-stone-300 rounded-lg p-2 text-sm" placeholder="Content value" value="${escapeHtml(content)}">
+      <button type="button" class="text-red-500 hover:text-red-700 text-lg" onclick="this.parentElement.remove()">✕</button>
+    `;
+    const select = row.querySelector('.global-meta-tag-name');
+    const customInput = row.querySelector('.global-meta-tag-custom');
+    select.addEventListener('change', () => {
+      if(select.value === 'custom') { customInput.classList.remove('hidden'); } 
+      else { customInput.classList.add('hidden'); }
+    });
+    container.appendChild(row);
   }
 
-  document.getElementById('addMetaTagBtn')?.addEventListener('click', () => addMetaTagRow());
+  function getGlobalMetaTagsFromUI() {
+    const rows = document.querySelectorAll('#globalMetaTagsContainer > div');
+    const tags = [];
+    rows.forEach(row => {
+      const select = row.querySelector('.global-meta-tag-name');
+      const customInput = row.querySelector('.global-meta-tag-custom');
+      const contentInput = row.querySelector('.global-meta-tag-content');
+      let name = select.value === 'custom' ? customInput.value.trim() : select.value;
+      let content = contentInput.value.trim();
+      if(name && content) tags.push({ name, content });
+    });
+    return tags;
+  }
+
+  function clearGlobalMetaTags() {
+    document.getElementById('globalMetaTagsContainer').innerHTML = '';
+  }
+
+  document.getElementById('addGlobalMetaTagBtn')?.addEventListener('click', () => addGlobalMetaTagRow());
 
   function openPostModal(postId = null) {
     const modal = document.getElementById("postModal");
@@ -523,7 +572,26 @@
 
   let isLoggedIn = false;
   function showLogin() { document.getElementById("loginSection").classList.remove("hidden"); document.getElementById("dashboardSection").classList.add("hidden"); isLoggedIn = false; }
-  function showDashboard() { document.getElementById("loginSection").classList.add("hidden"); document.getElementById("dashboardSection").classList.remove("hidden"); isLoggedIn = true; loadData(); updateDashboardStats(); loadSettingsToUI(); }
+  function showDashboard() { document.getElementById("loginSection").classList.add("hidden"); document.getElementById("dashboardSection").classList.remove("hidden"); isLoggedIn = true; loadData(); loadGlobalSeo(); updateDashboardStats(); loadSettingsToUI(); }
+  
+  async function loadGlobalSeo() {
+    try {
+      const res = await fetch('/api/settings/home-seo');
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById("globalMetaTitle").value = data.metaTitle || "";
+        document.getElementById("globalMetaDesc").value = data.metaDescription || "";
+        document.getElementById("globalMetaKeywords").value = data.keywords || "";
+        clearGlobalMetaTags();
+        if (data.metaTags && data.metaTags.length > 0) {
+          data.metaTags.forEach(tag => addGlobalMetaTagRow(tag.name, tag.content));
+        }
+      }
+    } catch(err) {
+      console.error("Failed to load global SEO");
+    }
+  }
+
   function loadSettingsToUI() {
     document.getElementById("enableAdsToggle").checked = adminSettings.adsEnabled;
     document.getElementById("showInlineAdsToggle").checked = adminSettings.showInlineAds;
@@ -553,19 +621,20 @@
   window.addEventListener("click", (e) => { if(e.target === document.getElementById("postModal")) closeModal(); });
   
   document.getElementById("saveGlobalSeoBtn")?.addEventListener("click", async () => {
-    const title = document.getElementById("globalMetaTitle").value;
-    const desc = document.getElementById("globalMetaDesc").value;
-    const keywords = document.getElementById("globalMetaKeywords").value;
+    const title = document.getElementById("globalMetaTitle").value.trim();
+    const desc = document.getElementById("globalMetaDesc").value.trim();
+    const keywords = document.getElementById("globalMetaKeywords").value.trim();
+    const metaTags = getGlobalMetaTagsFromUI();
     
     try {
       const res = await fetch('/api/settings/update-home-seo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description: desc, keywords })
+        body: JSON.stringify({ title, description: desc, keywords, metaTags: JSON.stringify(metaTags) })
       });
       const data = await res.json();
       if(data.success) {
-        showToast("Global SEO settings saved to index.html & home.html!");
+        showToast("Global SEO settings saved successfully!");
       } else {
         alert("Failed to save SEO settings.");
       }
