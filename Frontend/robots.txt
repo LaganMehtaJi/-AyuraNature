@@ -14,10 +14,22 @@ Disallow: /admin
 Disallow: /admin.html
 # Trusted LLM crawlers
 User-agent: ClaudeBot
-Allow: /User-agent: GPTBot
-Allow: /User-agent: Google-Extended
-Allow: /User-agent: PerplexityBot
-Allow: /User-agent: CCBot
 Allow: /
-# HostHost: https://ayuranature.com
-# Sitemap locationSitemap: https://ayuranature.com/sitemap.xml
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Host
+Host: https://ayuranature.com
+
+# Sitemap location
+Sitemap: https://ayuranature.com/sitemap.xml
