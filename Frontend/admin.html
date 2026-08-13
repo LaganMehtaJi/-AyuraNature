@@ -165,9 +165,17 @@
           <div><label class="font-semibold">Category</label><input type="text" id="postCategory" placeholder="e.g., Ayurveda & Natural Remedies" class="w-full border rounded-xl p-2.5"></div>
           <div><label class="font-semibold">Tags (comma separated)</label><input type="text" id="postTags" placeholder="Yoga, Herbs, Meditation" class="w-full border rounded-xl p-2.5"></div>
           <div><label class="font-semibold">Outer Image - For Card (Upload)</label><input type="file" id="postOuterImageFile" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Outer Image URL (Optional fallback)</label><input type="url" id="postOuterImage" placeholder="https://..." class="w-full border rounded-xl p-2.5"></div>
+          <div>
+            <label class="font-semibold">Outer Image URL (Optional fallback)</label>
+            <input type="url" id="postOuterImage" placeholder="https://..." class="w-full border rounded-xl p-2.5">
+            <div id="outerImagePreviewContainer" class="hidden mt-2"><img id="outerImagePreview" src="" class="h-24 w-auto object-cover rounded border border-stone-300"></div>
+          </div>
           <div><label class="font-semibold">Inner Image - For Read (Upload)</label><input type="file" id="postInnerImageFile" class="w-full border rounded-xl p-2.5"></div>
-          <div><label class="font-semibold">Inner Image URL (Optional fallback)</label><input type="url" id="postInnerImage" placeholder="https://..." class="w-full border rounded-xl p-2.5"></div>
+          <div>
+            <label class="font-semibold">Inner Image URL (Optional fallback)</label>
+            <input type="url" id="postInnerImage" placeholder="https://..." class="w-full border rounded-xl p-2.5">
+            <div id="innerImagePreviewContainer" class="hidden mt-2"><img id="innerImagePreview" src="" class="h-24 w-auto object-cover rounded border border-stone-300"></div>
+          </div>
           <div><label class="font-semibold">Publish Date</label><input type="date" id="postDate" class="w-full border rounded-xl p-2.5"></div>
         </div>
         <div class="flex gap-4 items-center"><label class="flex items-center gap-2"><input type="checkbox" id="postFeatured"> <span>⭐ Feature this post (show on homepage)</span></label></div>
@@ -451,8 +459,10 @@
     document.getElementById("postTags").value = "Wellness, Natural";
     document.getElementById("postOuterImage").value = "";
     document.getElementById("postOuterImageFile").value = "";
+    document.getElementById("outerImagePreviewContainer").classList.add("hidden");
     document.getElementById("postInnerImage").value = "";
     document.getElementById("postInnerImageFile").value = "";
+    document.getElementById("innerImagePreviewContainer").classList.add("hidden");
     document.getElementById("postFeatured").checked = false;
     document.getElementById("postDate").value = new Date().toISOString().slice(0,10);
     document.getElementById("modalTitle").innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Create New Blog';
@@ -472,7 +482,20 @@
         document.getElementById("postCategory").value = post.category || "";
         document.getElementById("postTags").value = (post.tags || []).join(", ");
         document.getElementById("postOuterImage").value = post.outerImage?.url || "";
+        if (post.outerImage?.url) {
+          document.getElementById("outerImagePreview").src = post.outerImage.url;
+          document.getElementById("outerImagePreviewContainer").classList.remove("hidden");
+        } else {
+          document.getElementById("outerImagePreviewContainer").classList.add("hidden");
+        }
+        
         document.getElementById("postInnerImage").value = post.innerImage?.url || "";
+        if (post.innerImage?.url) {
+          document.getElementById("innerImagePreview").src = post.innerImage.url;
+          document.getElementById("innerImagePreviewContainer").classList.remove("hidden");
+        } else {
+          document.getElementById("innerImagePreviewContainer").classList.add("hidden");
+        }
         document.getElementById("postFeatured").checked = post.featured || false;
         document.getElementById("postDate").value = post.date ? post.date.split('T')[0] : new Date().toISOString().slice(0,10);
         document.getElementById("modalTitle").innerHTML = '<i class="fas fa-edit mr-2"></i> Edit Blog Post';
